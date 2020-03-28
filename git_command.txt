@@ -1,0 +1,64 @@
+git init
+git status
+git add filename
+
+git commit -m "message1"
+
+git log
+
+git commit -am 스테이지에 올리고 커밋을 한번에 처리.
+
+git log --stat
+git log --oneline
+
+git commit --amend     msg 수정
+
+git checkout -- filename
+
+git reset HEAD filename
+
+git reset HEAD^
+
+git reset --hard commithash
+
+git revert commithash => 내용은 삭제되고, commit ver은 유지가 된다.
+
+git branch
+git branch branchname
+
+git checkout branchname
+
+git log --oneline --branches 각 브랜치의 커밋 
+
+git log master..apple 두 브랜치 차이 비교
+
+git merge branchname
+
+git branch -d branchname 브랜치 삭제
+
+
+수정 중인 파일 감추기 및 되돌리기
+git stash
+git stash list
+git stash pop
+
+
+git remote add origin https://github.com/bloodstrawberry/test-1.git
+git remote -v
+
+git push -u origin master (최초 push)
+
+git commit -am "msg"
+git push
+
+git pull origin master
+
+git clone https://github.com/bloodstrawberry/test-1.git git_home
+git remote -v 원격 저장소 확인.
+
+git push / git pull
+
+
+
+
+
