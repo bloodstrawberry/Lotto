@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LottoManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
+    <ClInclude Include="LottoManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
