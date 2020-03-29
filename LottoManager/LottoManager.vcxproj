@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="LottoManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StatisticsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="define.h" />
     <ClInclude Include="LottoManager.h" />
+    <ClInclude Include="StatisticsManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
