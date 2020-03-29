@@ -1,0 +1,1 @@
+#define NUM_OF_ALLCASE (800)
