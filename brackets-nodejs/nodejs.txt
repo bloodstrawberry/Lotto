@@ -1,0 +1,6 @@
+http://brackets.io/ 설치
+
+파일 -> 확장 기능 관리자
+Custom Work 설치
+Brackets Icons 설치
+
