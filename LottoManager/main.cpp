@@ -1,24 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "define.h"
-#include "LottoManager.h"
+
+#include "FileManager.h"
+
+extern int NumOfWinLotto;
+extern int NumOfSuckLotto;
 
 int main()
 {
-	//파일 오픈 당첨 번호 받기.
+	getLottoWinningNumber(); //당첨 번호 
+	getMySuckNumber(); //실패한 나의 번호
 
-	//파일 오픈 suck number 받기.
+	//MAP으로 check realnum sucknum 관리하기.
 
-
-
-	int a;
-	scanf("%d", &a);
-	printf("%d", NUM_OF_ALLCASE);
-
-	//test
-
-	TEMPTEMP();
+	printf("NumOfWinLotto %d\n", NumOfWinLotto);
+	printf("NumOfSuckLotto %d\n", NumOfSuckLotto);
 
 	return 0;
 }

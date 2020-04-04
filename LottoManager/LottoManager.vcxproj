@@ -118,16 +118,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="LottoManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StatisticsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
+    <Text Include="LottoWinningNumber.txt" />
+    <Text Include="MySuckNumber.txt" />
     <Text Include="output.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="LottoManager.h" />
     <ClInclude Include="StatisticsManager.h" />
   </ItemGroup>
