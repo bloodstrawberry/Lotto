@@ -1,14 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <map>
+#include <iostream>
 
 #include "LottoManager.h"
 
+using namespace std;
+
 int NumOfWinLotto;
 LOTTO LottoWinningNumber[10000];
+map<ull, bool> MapLottoWinningNumber;
 
 int NumOfSuckLotto;
 LOTTO MySuckNumber[10000];
+map<ull, bool> MapMySuckNumber;
 
 void showLottoNumber(int index)
 {
@@ -25,21 +31,30 @@ void showLottoNumber(LOTTO Lotto)
 	putchar('\n');
 }
 
+bool isLottoWinningNumber(LOTTO Lotto)
+{
+	return MapLottoWinningNumber.count(Lotto.key);
+}
+
 bool isMySuckNumber(LOTTO Lotto)
 {
-	for (int i = 0; i < NumOfSuckLotto;i++)
-	{
-		int check;
-		check =
-			(Lotto.number[0] == MySuckNumber[i].number[0])
-			&& (Lotto.number[1] == MySuckNumber[i].number[1])
-			&& (Lotto.number[2] == MySuckNumber[i].number[2])
-			&& (Lotto.number[3] == MySuckNumber[i].number[3])
-			&& (Lotto.number[4] == MySuckNumber[i].number[4])
-			&& (Lotto.number[5] == MySuckNumber[i].number[5]);
-
-		if (check) return true;
-	}
-
-	return false;
+	return MapMySuckNumber.count(Lotto.key);
 }
+
+
+
+ull makeKey(LOTTO Lotto)
+{
+	return Lotto.number[0] * 10000000000ull + Lotto.number[1] * 100000000ull + Lotto.number[2] * 1000000ull 
+		+ Lotto.number[3] * 10000ull + Lotto.number[4] * 100ull + Lotto.number[5];
+}
+
+
+
+//void printMap()
+//{
+//	map<ull, bool>::iterator iter;
+//	for (iter = m.begin(); iter != m.end(); ++iter)
+//		cout << "(" << (*iter).first << "," << (*iter).second << ")" << " ";
+//	cout << endl;
+//}

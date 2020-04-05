@@ -10,13 +10,18 @@ typedef struct _lotto
 	int bonus;
 
 	ull status;
+	ull key;
 
 }LOTTO;
+
 
 void showLottoNumber(int index);
 void showLottoNumber(LOTTO Lotto);
 
+bool isLottoWinningNumber(LOTTO Lotto);
 bool isMySuckNumber(LOTTO Lotto);
+
+ull makeKey(LOTTO Lotto);
 
 
 

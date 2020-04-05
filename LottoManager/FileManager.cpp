@@ -1,17 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <map>
+#include <iostream>
 
 #include "FileManager.h"
 #include "StatisticsManager.h"
 #include "LottoManager.h"
 
+using namespace std;
+
 extern int START_NUM;
 extern int END_NUM;
+
 extern int NumOfWinLotto;
 extern LOTTO LottoWinningNumber[];
+extern map<ull, bool> MapLottoWinningNumber;
+
 extern int NumOfSuckLotto;
 extern LOTTO MySuckNumber[];
+extern map<ull, bool> MapMySuckNumber;
 
 void getLottoWinningNumber()
 {
@@ -38,6 +46,9 @@ void getLottoWinningNumber()
 		LottoWinningNumber[NumOfWinLotto].number[4] = n5;
 		LottoWinningNumber[NumOfWinLotto].number[5] = n6;
 		LottoWinningNumber[NumOfWinLotto].bonus     = bs;
+		LottoWinningNumber[NumOfWinLotto].key = makeKey(LottoWinningNumber[NumOfWinLotto]);
+		MapLottoWinningNumber[LottoWinningNumber[NumOfWinLotto].key] = true;
+		//printf("%lld\n", LottoWinningNumber[NumOfWinLotto].key);
 		//showLottoNumber(LottoWinningNumber[NumOfWinLotto]);
 	}
 
@@ -68,6 +79,10 @@ void getMySuckNumber()
 		MySuckNumber[NumOfSuckLotto].number[3] = n4;
 		MySuckNumber[NumOfSuckLotto].number[4] = n5;
 		MySuckNumber[NumOfSuckLotto].number[5] = n6;
+		MySuckNumber[NumOfSuckLotto].key = makeKey(MySuckNumber[NumOfSuckLotto]);
+		
+
+		//printf("%lld\n", MySuckNumber[NumOfSuckLotto].key);
 		//showLottoNumber(MySuckNumber[NumOfSuckLotto]);
 		
 		if (isMySuckNumber(MySuckNumber[NumOfSuckLotto]))
@@ -76,6 +91,8 @@ void getMySuckNumber()
 			showLottoNumber(MySuckNumber[NumOfSuckLotto]);
 			exit(1);
 		}
+
+		MapMySuckNumber[MySuckNumber[NumOfSuckLotto].key] = true;
 	}
 
 	fclose(fp);
