@@ -6,6 +6,7 @@
 
 #include "LottoManager.h"
 #include "FileManager.h"
+#include "StatisticsManager.h"
 
 using namespace std;
 
@@ -19,12 +20,12 @@ LOTTO testLotto;
 int main()
 {
 	//8 19 20 27 42 45
-	testLotto.number[0] = 1;
-	testLotto.number[1] = 4;
-	testLotto.number[2] = 10;
-	testLotto.number[3] = 12;
-	testLotto.number[4] = 28;
-	testLotto.number[5] = 45;
+	testLotto.number[0] = 6;
+	testLotto.number[1] = 12;
+	testLotto.number[2] = 17;
+	testLotto.number[3] = 19;
+	testLotto.number[4] = 34;
+	testLotto.number[5] = 37;
 	testLotto.key = makeKey(testLotto);
 
 	getLottoWinningNumber(); //´çÃ· ¹øÈ£ 
@@ -38,6 +39,7 @@ int main()
 	printf("%d\n", isLottoWinningNumber(testLotto));
 	printf("%d\n", isMySuckNumber(testLotto));
 
+	showPastLottoResult(testLotto, 3);
 
 	return 0;
 }
