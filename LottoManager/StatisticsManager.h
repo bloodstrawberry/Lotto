@@ -6,5 +6,10 @@
 
 void showPastLottoResult(LOTTO Lotto, int offset);
 
-
+//연속된 숫자 6개, 5개, ..., 2개
+bool checkConsecutive6(LOTTO Lotto);
+bool checkConsecutive5(LOTTO Lotto);
+bool checkConsecutive4(LOTTO Lotto);
+bool checkConsecutive3(LOTTO Lotto);
+bool checkConsecutive2(LOTTO Lotto);
 #endif

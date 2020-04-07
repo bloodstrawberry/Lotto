@@ -23,6 +23,7 @@ bool isMySuckNumber(LOTTO Lotto);
 
 ull makeKey(LOTTO Lotto);
 
+void getAllNumber();
 
 
 #endif 

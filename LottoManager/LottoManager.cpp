@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "LottoManager.h"
+#include "StatisticsManager.h"
 
 using namespace std;
 
@@ -15,6 +16,8 @@ map<ull, bool> MapLottoWinningNumber;
 int NumOfSuckLotto;
 LOTTO MySuckNumber[10000];
 map<ull, bool> MapMySuckNumber;
+
+LOTTO AllLottoNumber[NUM_OF_ALLCASE + 10];
 
 void showLottoNumber(int index)
 {
@@ -49,7 +52,30 @@ ull makeKey(LOTTO Lotto)
 		+ Lotto.number[3] * 10000ull + Lotto.number[4] * 100ull + Lotto.number[5];
 }
 
+void getAllNumber()
+{
+	int a, b, c, d, e, f;
 
+	int cnt = 0;
+	for (a = 1; a <= 40;a++)
+		for (b = a + 1; b <= 41;b++)
+			for (c = b + 1; c <= 42;c++)
+				for (d = c + 1; d <= 43;d++)
+					for (e = d + 1; e <= 44;e++)
+						for (f = e + 1; f <= 45;f++)
+						{
+							AllLottoNumber[cnt].number[0] = a;
+							AllLottoNumber[cnt].number[1] = b;
+							AllLottoNumber[cnt].number[2] = c;
+							AllLottoNumber[cnt].number[3] = d;
+							AllLottoNumber[cnt].number[4] = e;
+							AllLottoNumber[cnt].number[5] = f;
+							cnt++;
+						}
+
+
+	//for (int i = 0; i < NUM_OF_ALLCASE;i++) showLottoNumber(AllLottoNumber[i]);
+}
 
 //void printMap()
 //{

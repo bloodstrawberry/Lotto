@@ -19,6 +19,9 @@ LOTTO testLotto;
 
 int main()
 {
+	getAllNumber();
+	return 0;
+
 	//8 19 20 27 42 45
 	testLotto.number[0] = 6;
 	testLotto.number[1] = 12;

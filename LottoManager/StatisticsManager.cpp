@@ -57,4 +57,44 @@ void showPastLottoResult(LOTTO Lotto, int offset)
 
 }
 
+bool checkConsecutive6(LOTTO Lotto)
+{
+	if (Lotto.number[5] - Lotto.number[0] == 5) return 1;
+	return 0;
+}
+
+bool checkConsecutive5(LOTTO Lotto)
+{
+	if (Lotto.number[4] - Lotto.number[0] == 4
+		|| Lotto.number[5] - Lotto.number[1] == 4) return 1;
+	return 0;
+}
+
+bool checkConsecutive4(LOTTO Lotto)
+{
+	if (Lotto.number[3] - Lotto.number[0] == 3
+		|| Lotto.number[4] - Lotto.number[1] == 3
+		|| Lotto.number[5] - Lotto.number[2] == 3) return 1;
+	return 0;
+}
+
+bool checkConsecutive3(LOTTO Lotto)
+{
+	if (Lotto.number[2] - Lotto.number[0] == 2
+		|| Lotto.number[3] - Lotto.number[1] == 2
+		|| Lotto.number[4] - Lotto.number[2] == 2
+		|| Lotto.number[5] - Lotto.number[3] == 2) return 1;
+	return 0;
+}
+
+bool checkConsecutive2(LOTTO Lotto)
+{
+	if (Lotto.number[1] - Lotto.number[0] == 1
+		|| Lotto.number[2] - Lotto.number[1] == 1
+		|| Lotto.number[3] - Lotto.number[2] == 1
+		|| Lotto.number[4] - Lotto.number[3] == 1
+		|| Lotto.number[5] - Lotto.number[4] == 1) return 1;
+	return 0;
+}
+
 
