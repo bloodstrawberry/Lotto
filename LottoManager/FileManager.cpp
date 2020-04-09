@@ -46,10 +46,12 @@ void getLottoWinningNumber()
 		LottoWinningNumber[NumOfWinLotto].number[4] = n5;
 		LottoWinningNumber[NumOfWinLotto].number[5] = n6;
 		LottoWinningNumber[NumOfWinLotto].bonus     = bs;
-		LottoWinningNumber[NumOfWinLotto].key = makeKey(LottoWinningNumber[NumOfWinLotto]);
+		LottoWinningNumber[NumOfWinLotto].key       = makeKey(LottoWinningNumber[NumOfWinLotto]);
+		LottoWinningNumber[NumOfWinLotto].bitNumber = makeBitNumber(LottoWinningNumber[NumOfWinLotto]);
 		MapLottoWinningNumber[LottoWinningNumber[NumOfWinLotto].key] = true;
 		//printf("%lld\n", LottoWinningNumber[NumOfWinLotto].key);
 		//showLottoNumber(LottoWinningNumber[NumOfWinLotto]);
+		//showBinary_long(LottoWinningNumber[NumOfWinLotto].bitNumber);
 	}
 
 	fclose(fp);
@@ -79,8 +81,8 @@ void getMySuckNumber()
 		MySuckNumber[NumOfSuckLotto].number[3] = n4;
 		MySuckNumber[NumOfSuckLotto].number[4] = n5;
 		MySuckNumber[NumOfSuckLotto].number[5] = n6;
-		MySuckNumber[NumOfSuckLotto].key = makeKey(MySuckNumber[NumOfSuckLotto]);
-		
+		MySuckNumber[NumOfSuckLotto].key       = makeKey(MySuckNumber[NumOfSuckLotto]);
+		MySuckNumber[NumOfSuckLotto].bitNumber = makeBitNumber(MySuckNumber[NumOfSuckLotto]);
 
 		//printf("%lld\n", MySuckNumber[NumOfSuckLotto].key);
 		//showLottoNumber(MySuckNumber[NumOfSuckLotto]);

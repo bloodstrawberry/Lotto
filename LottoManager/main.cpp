@@ -20,7 +20,6 @@ LOTTO testLotto;
 int main()
 {
 	getAllNumber();
-	return 0;
 
 	//8 19 20 27 42 45
 	testLotto.number[0] = 6;

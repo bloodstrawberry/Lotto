@@ -6,8 +6,10 @@
 typedef struct _lotto
 {
 	int index;
+	
 	int number[6];
 	int bonus;
+	ull bitNumber;
 
 	ull status;
 	ull key;
@@ -22,6 +24,7 @@ bool isLottoWinningNumber(LOTTO Lotto);
 bool isMySuckNumber(LOTTO Lotto);
 
 ull makeKey(LOTTO Lotto);
+ull makeBitNumber(LOTTO Lotto);
 
 void getAllNumber();
 

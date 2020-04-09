@@ -5,6 +5,7 @@
 #include "LottoManager.h"
 
 void showPastLottoResult(LOTTO Lotto, int offset);
+void showBinary_long(ull n);
 
 //연속된 숫자 6개, 5개, ..., 2개
 bool checkConsecutive6(LOTTO Lotto);

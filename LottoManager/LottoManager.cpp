@@ -52,6 +52,11 @@ ull makeKey(LOTTO Lotto)
 		+ Lotto.number[3] * 10000ull + Lotto.number[4] * 100ull + Lotto.number[5];
 }
 
+ull makeBitNumber(LOTTO Lotto)
+{
+	return (1ull << Lotto.number[0]) | (1ull << Lotto.number[1]) | (1ull << Lotto.number[2]) | (1ull << Lotto.number[3]) | (1ull << Lotto.number[4]) | (1ull << Lotto.number[5]);
+}
+
 void getAllNumber()
 {
 	int a, b, c, d, e, f;
@@ -70,6 +75,7 @@ void getAllNumber()
 							AllLottoNumber[cnt].number[3] = d;
 							AllLottoNumber[cnt].number[4] = e;
 							AllLottoNumber[cnt].number[5] = f;
+							makeKey(AllLottoNumber[cnt]);
 							cnt++;
 						}
 

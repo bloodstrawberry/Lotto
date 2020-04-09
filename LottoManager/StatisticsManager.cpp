@@ -57,6 +57,17 @@ void showPastLottoResult(LOTTO Lotto, int offset)
 
 }
 
+void showBinary_long(ull n)
+{
+	ull mask = 1ull << 63;
+	for (int i = 0; i < 64;i++)
+	{
+		printf("%d ", (n & mask) == mask);
+		mask >>= 1;
+	}
+	putchar('\n');
+}
+
 bool checkConsecutive6(LOTTO Lotto)
 {
 	if (Lotto.number[5] - Lotto.number[0] == 5) return 1;
