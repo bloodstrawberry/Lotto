@@ -44,8 +44,6 @@ bool isMySuckNumber(LOTTO Lotto)
 	return MapMySuckNumber.count(Lotto.key);
 }
 
-
-
 ull makeKey(LOTTO Lotto)
 {
 	return Lotto.number[0] * 10000000000ull + Lotto.number[1] * 100000000ull + Lotto.number[2] * 1000000ull 
@@ -55,6 +53,18 @@ ull makeKey(LOTTO Lotto)
 ull makeBitNumber(LOTTO Lotto)
 {
 	return (1ull << Lotto.number[0]) | (1ull << Lotto.number[1]) | (1ull << Lotto.number[2]) | (1ull << Lotto.number[3]) | (1ull << Lotto.number[4]) | (1ull << Lotto.number[5]);
+}
+
+int makeSum(LOTTO Lotto)
+{
+	return Lotto.number[0] + Lotto.number[1] + Lotto.number[2] + Lotto.number[3] + Lotto.number[4] + Lotto.number[5];
+}
+
+void makeStatisticsInfo(LOTTO& Lotto)
+{
+	Lotto.key = makeKey(Lotto);
+	Lotto.bitNumber = makeBitNumber(Lotto);
+	Lotto.sum = makeSum(Lotto);
 }
 
 void getAllNumber()

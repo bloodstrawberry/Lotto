@@ -46,8 +46,8 @@ void getLottoWinningNumber()
 		LottoWinningNumber[NumOfWinLotto].number[4] = n5;
 		LottoWinningNumber[NumOfWinLotto].number[5] = n6;
 		LottoWinningNumber[NumOfWinLotto].bonus     = bs;
-		LottoWinningNumber[NumOfWinLotto].key       = makeKey(LottoWinningNumber[NumOfWinLotto]);
-		LottoWinningNumber[NumOfWinLotto].bitNumber = makeBitNumber(LottoWinningNumber[NumOfWinLotto]);
+
+		makeStatisticsInfo(LottoWinningNumber[NumOfWinLotto]);
 		MapLottoWinningNumber[LottoWinningNumber[NumOfWinLotto].key] = true;
 		//printf("%lld\n", LottoWinningNumber[NumOfWinLotto].key);
 		//showLottoNumber(LottoWinningNumber[NumOfWinLotto]);
@@ -81,8 +81,7 @@ void getMySuckNumber()
 		MySuckNumber[NumOfSuckLotto].number[3] = n4;
 		MySuckNumber[NumOfSuckLotto].number[4] = n5;
 		MySuckNumber[NumOfSuckLotto].number[5] = n6;
-		MySuckNumber[NumOfSuckLotto].key       = makeKey(MySuckNumber[NumOfSuckLotto]);
-		MySuckNumber[NumOfSuckLotto].bitNumber = makeBitNumber(MySuckNumber[NumOfSuckLotto]);
+		makeStatisticsInfo(MySuckNumber[NumOfSuckLotto]);
 
 		//printf("%lld\n", MySuckNumber[NumOfSuckLotto].key);
 		//showLottoNumber(MySuckNumber[NumOfSuckLotto]);
@@ -90,6 +89,13 @@ void getMySuckNumber()
 		if (isMySuckNumber(MySuckNumber[NumOfSuckLotto]))
 		{
 			printf("this is already Suck Number!!!\n");
+			showLottoNumber(MySuckNumber[NumOfSuckLotto]);
+			exit(1);
+		}
+
+		if (isLottoWinningNumber(MySuckNumber[NumOfSuckLotto]))
+		{
+			printf("MySuckNumber is LottoNumber!!!\n");
 			showLottoNumber(MySuckNumber[NumOfSuckLotto]);
 			exit(1);
 		}

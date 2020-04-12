@@ -11,6 +11,7 @@ typedef struct _lotto
 	int bonus;
 	ull bitNumber;
 
+	int sum;
 	ull status;
 	ull key;
 
@@ -25,6 +26,8 @@ bool isMySuckNumber(LOTTO Lotto);
 
 ull makeKey(LOTTO Lotto);
 ull makeBitNumber(LOTTO Lotto);
+int makeSum(LOTTO Lotto);
+void makeStatisticsInfo(LOTTO& Lotto);
 
 void getAllNumber();
 
