@@ -9,6 +9,7 @@ var winston = require('winston');    				// 로그 처리 모듈
 var winstonDaily = require('winston-daily-rotate-file');    	// 로그 일별 처리 모듈
 var moment = require('moment');    				// 시간 처리 모듈
 
+
 function timeStampFormat() {
     return moment().format('YYYY-MM-DD HH:mm:ss.SSS ZZ'); // '2016-05-01 20:14:28.500 +0900'
 };
@@ -60,7 +61,8 @@ var logger = new (winston.Logger)({
     ]
 });
 
-
+logger.debug('디버깅 메시지');
+logger.error('에러 메시지');
 
 var fs = require('fs');
 
@@ -70,8 +72,12 @@ var outname = './output2.txt';
 fs.exists(outname, function (exists) {
     if (exists) {
     	fs.unlink(outname, function (err) {
-    		if (err) throw err;
-    		logger.info('기존 파일 [' + outname +'] 삭제함.');
+    		if (err) 
+            {
+                
+                throw err;
+            }
+             logger.info('기존 파일 [' + outname +'] 삭제함.');
     	});
     }
     
@@ -81,5 +87,4 @@ fs.exists(outname, function (exists) {
 	infile.pipe(outfile);
 	logger.info('파일 복사 [' + inname + '] -> [' + outname + ']');
 });
-
 

@@ -93,6 +93,124 @@ void getAllNumber()
 	//for (int i = 0; i < NUM_OF_ALLCASE;i++) showLottoNumber(AllLottoNumber[i]);
 }
 
+
+void deleteNumber()
+{
+	//총 개수에서 몇개가 빠지는지 세기 [삭제 수 / 전체 수에서 삭제 수]
+	//delete flag로 관리 후 마지막에 한꺼번에 삭제.
+
+	//연속된 2 ~ 6자리 수 삭제
+	//등차수열 삭제 차수 2 ~ 8 삭제
+	//짝수가 6개인 경우
+	//짝수가 5개인 경우
+	//짝수가 4개인 경우
+	//짝수가 3개인 경우
+	//짝수가 2개인 경우
+	//짝수가 1개인 경우
+	//짝수가 0개인 경우
+	//이미 로또 번호인 경우
+	//SuckNumber 삭제
+	//모두 소수인 경우 삭제
+
+	//
+	
+}
+
+bool checkConsecutive6(LOTTO Lotto)
+{
+	if (Lotto.number[5] - Lotto.number[0] == 5) return 1;
+	return 0;
+}
+
+bool checkConsecutive5(LOTTO Lotto)
+{
+	if (Lotto.number[4] - Lotto.number[0] == 4
+		|| Lotto.number[5] - Lotto.number[1] == 4) return 1;
+	return 0;
+}
+
+bool checkConsecutive4(LOTTO Lotto)
+{
+	if (Lotto.number[3] - Lotto.number[0] == 3
+		|| Lotto.number[4] - Lotto.number[1] == 3
+		|| Lotto.number[5] - Lotto.number[2] == 3) return 1;
+	return 0;
+}
+
+bool checkConsecutive3(LOTTO Lotto)
+{
+	if (Lotto.number[2] - Lotto.number[0] == 2
+		|| Lotto.number[3] - Lotto.number[1] == 2
+		|| Lotto.number[4] - Lotto.number[2] == 2
+		|| Lotto.number[5] - Lotto.number[3] == 2) return 1;
+	return 0;
+}
+
+bool checkConsecutive2(LOTTO Lotto)
+{
+	if (Lotto.number[1] - Lotto.number[0] == 1
+		|| Lotto.number[2] - Lotto.number[1] == 1
+		|| Lotto.number[3] - Lotto.number[2] == 1
+		|| Lotto.number[4] - Lotto.number[3] == 1
+		|| Lotto.number[5] - Lotto.number[4] == 1) return 1;
+	return 0;
+}
+
+bool checkDiff(LOTTO Lotto, int diff)
+{
+	for (int i = 1; i < 6;i++)
+		if (Lotto.number[i] - Lotto.number[i - 1] != diff) return false;
+
+	return true;
+}
+
+bool checkDifferentialSequence(LOTTO Lotto)
+{
+	for (int diff = 2; diff <= 8;diff++)
+	{
+		if (checkDiff(Lotto, diff)) return true;
+	}
+
+	return false;
+}
+
+int mustNumber[50];
+int mustSize;
+void setMustNumber(int* number, int size)
+{
+	mustSize = size;
+	for (int i = 0; i < size;i++)
+		mustNumber[number[i]] = 1;
+}
+
+bool isMustNumber(LOTTO Lotto)
+{
+	int cnt = 0;
+	for (int i = 0; i < 6;i++)
+		if (mustNumber[Lotto.number[i]]) cnt++;
+
+	if (cnt == mustSize) return true;
+	return false;
+}
+
+int wrongNumber[50];
+int wrongSize;
+void setWrongNumber(int* number, int size)
+{
+	wrongSize = size;
+	for (int i = 0; i < size;i++)
+		wrongNumber[number[i]] = 1;
+}
+
+bool isWrongNumber(LOTTO Lotto)
+{
+	int cnt = 0;
+	for (int i = 0; i < 6;i++)
+		if (wrongNumber[Lotto.number[i]]) return true;
+
+	return false;
+}
+
 //void printMap()
 //{
 //	map<ull, bool>::iterator iter;
@@ -100,3 +218,4 @@ void getAllNumber()
 //		cout << "(" << (*iter).first << "," << (*iter).second << ")" << " ";
 //	cout << endl;
 //}
+

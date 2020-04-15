@@ -4,13 +4,19 @@
 #include "define.h"
 #include "LottoManager.h"
 
+unsigned int random(void);
+
 void showPastLottoResult(LOTTO Lotto, int offset);
 void showBinary_long(ull n);
 
-//연속된 숫자 6개, 5개, ..., 2개
-bool checkConsecutive6(LOTTO Lotto);
-bool checkConsecutive5(LOTTO Lotto);
-bool checkConsecutive4(LOTTO Lotto);
-bool checkConsecutive3(LOTTO Lotto);
-bool checkConsecutive2(LOTTO Lotto);
+
+void findConsecutiveNumbers(int lottoNum);
+void findAllConsecutiveNumbers();
+void showConsecutiveNumbers();
+
+void findJumpNumbers(int lottoNum);
+void findAllJumpNumbers();
+void showJumpNumbers();
+
 #endif
+

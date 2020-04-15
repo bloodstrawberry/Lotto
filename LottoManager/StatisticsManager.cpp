@@ -1,3 +1,4 @@
+//당첨된 번호 분석용 cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -11,8 +12,17 @@ using namespace std;
 extern int NumOfWinLotto;
 extern LOTTO LottoWinningNumber[];
 
-int START_NUM;
-int END_NUM;
+int START_NUMBER = 524;
+int END_NUMBER;
+
+int CONSECUTIVE_NUMBERS[7][50];
+int JUMP_NUMBERS[7][50];
+
+unsigned long long seed = 5; // seed can be changed
+unsigned int random(void)
+{
+	return ((unsigned int)((seed = seed * 25214903917ULL + 11ULL) >> 16));
+}
 
 void showPastLottoResult(LOTTO Lotto, int offset)
 {
@@ -68,44 +78,112 @@ void showBinary_long(ull n)
 	putchar('\n');
 }
 
-bool checkConsecutive6(LOTTO Lotto)
+void findConsecutiveNumbers(int lottoNum)
 {
-	if (Lotto.number[5] - Lotto.number[0] == 5) return 1;
-	return 0;
+	int i;
+	LOTTO& Lotto = LottoWinningNumber[lottoNum];
+
+	for (i = 0; i < 5;i++)
+	{
+		if (Lotto.number[i + 1] - Lotto.number[i] == 1)
+		{
+			//printf("%d] %d %d\n", lottoNum + 1, Lotto.number[i], Lotto.number[i + 1]);
+			CONSECUTIVE_NUMBERS[2][Lotto.number[i]]++;
+		}
+	}
 }
 
-bool checkConsecutive5(LOTTO Lotto)
+void findAllConsecutiveNumbers()
 {
-	if (Lotto.number[4] - Lotto.number[0] == 4
-		|| Lotto.number[5] - Lotto.number[1] == 4) return 1;
-	return 0;
+	// 2연속 번호만 check.
+	int lottoNum;
+	for (lottoNum = START_NUMBER; lottoNum <= NumOfWinLotto;lottoNum++)
+	{
+		findConsecutiveNumbers(lottoNum);
+	}
 }
 
-bool checkConsecutive4(LOTTO Lotto)
+void showConsecutiveNumbers()
 {
-	if (Lotto.number[3] - Lotto.number[0] == 3
-		|| Lotto.number[4] - Lotto.number[1] == 3
-		|| Lotto.number[5] - Lotto.number[2] == 3) return 1;
-	return 0;
+	printf("\n================ show consecutivenumbers ==============\n");
+
+	int index[50] = { 0 };
+	int value[50] = { 0 };
+
+	for (int i = 0; i < 50;i++) index[i] = i;
+	for (int i = 0; i < 50;i++) value[i] = CONSECUTIVE_NUMBERS[2][i];
+
+	for (int i = 0; i < 49;i++)
+	{
+		for (int k = i + 1; k < 50;k++)
+		{
+			if (value[i] > value[k]) continue;
+
+			int tmp = value[i];
+			value[i] = value[k];
+			value[k] = tmp;
+
+			tmp = index[i];
+			index[i] = index[k];
+			index[k] = tmp;
+		}
+	}
+
+	for (int i = 0; i < 45;i++)
+		if(index[i] <= 45) printf("%d, %d] : %d\n", index[i], index[i] + 1, value[i]);
 }
 
-bool checkConsecutive3(LOTTO Lotto)
+void findJumpNumbers(int lottoNum)
 {
-	if (Lotto.number[2] - Lotto.number[0] == 2
-		|| Lotto.number[3] - Lotto.number[1] == 2
-		|| Lotto.number[4] - Lotto.number[2] == 2
-		|| Lotto.number[5] - Lotto.number[3] == 2) return 1;
-	return 0;
+	int i;
+	LOTTO& Lotto = LottoWinningNumber[lottoNum];
+
+	for (i = 0; i < 5;i++)
+	{
+		if (Lotto.number[i + 1] - Lotto.number[i] == 2)
+		{
+			//printf("%d] %d %d\n", lottoNum + 1, Lotto.number[i], Lotto.number[i + 1]);
+			JUMP_NUMBERS[2][Lotto.number[i]]++;
+		}
+	}
 }
 
-bool checkConsecutive2(LOTTO Lotto)
+void findAllJumpNumbers()
 {
-	if (Lotto.number[1] - Lotto.number[0] == 1
-		|| Lotto.number[2] - Lotto.number[1] == 1
-		|| Lotto.number[3] - Lotto.number[2] == 1
-		|| Lotto.number[4] - Lotto.number[3] == 1
-		|| Lotto.number[5] - Lotto.number[4] == 1) return 1;
-	return 0;
+	int lottoNum;
+	for (lottoNum = START_NUMBER; lottoNum <= NumOfWinLotto;lottoNum++)
+	{
+		findJumpNumbers(lottoNum);
+	}
 }
 
+void showJumpNumbers()
+{
+	//for (int i = 1; i <= 44;i++) 
+	//if(consecutive_numbers[2][i]) printf("%d, %d] : %d\n", i, i+1, consecutive_numbers[2][i]);
+	printf("\n================ show jump number ==============\n");
+	int index[50] = { 0 };
+	int value[50] = { 0 };
 
+	for (int i = 0; i < 50;i++) index[i] = i;
+	for (int i = 0; i < 50;i++) value[i] = JUMP_NUMBERS[2][i];
+
+	for (int i = 0; i < 49;i++)
+	{
+		for (int k = i + 1; k < 50;k++)
+		{
+			if (value[i] > value[k]) continue;
+
+			int tmp = value[i];
+			value[i] = value[k];
+			value[k] = tmp;
+
+			tmp = index[i];
+			index[i] = index[k];
+			index[k] = tmp;
+		}
+	}
+
+	for (int i = 0; i < 45;i++)
+		printf("%d, %d] : %d\n", index[i], index[i] + 2, value[i]);
+}

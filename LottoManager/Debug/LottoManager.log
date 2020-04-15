@@ -1,18 +1,4 @@
-﻿  FileManager.cpp
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(26): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: 'fopen' 선언을 참조하십시오.
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(34): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1195): note: 'fscanf' 선언을 참조하십시오.
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(38): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1195): note: 'fscanf' 선언을 참조하십시오.
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(39): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1195): note: 'fscanf' 선언을 참조하십시오.
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(63): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: 'fopen' 선언을 참조하십시오.
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(71): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1195): note: 'fscanf' 선언을 참조하십시오.
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(75): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1195): note: 'fscanf' 선언을 참조하십시오.
-c:\users\vvv30\source\repos\lottomanager\lottomanager\filemanager.cpp(76): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1195): note: 'fscanf' 선언을 참조하십시오.
-  LottoManager.vcxproj -> C:\Users\vvv30\source\repos\LottoManager\Debug\LottoManager.exe
+﻿  main.cpp
+c:\users\vvv30\source\repos\lottomanager\lottomanager\main.cpp(22): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+StatisticsManager.obj : error LNK2005: "unsigned __int64 seed" (?seed@@3_KA)이(가) LottoManager.obj에 이미 정의되어 있습니다.
+C:\Users\vvv30\source\repos\LottoManager\Debug\LottoManager.exe : fatal error LNK1169: 여러 번 정의된 기호가 있습니다.

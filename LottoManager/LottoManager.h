@@ -15,6 +15,8 @@ typedef struct _lotto
 	ull status;
 	ull key;
 
+	
+	bool deleteFlag;
 }LOTTO;
 
 
@@ -30,6 +32,22 @@ int makeSum(LOTTO Lotto);
 void makeStatisticsInfo(LOTTO& Lotto);
 
 void getAllNumber();
+void deleteNumber();
 
+//연속된 숫자 6개, 5개, ..., 2개
+bool checkConsecutive6(LOTTO Lotto);
+bool checkConsecutive5(LOTTO Lotto);
+bool checkConsecutive4(LOTTO Lotto);
+bool checkConsecutive3(LOTTO Lotto);
+bool checkConsecutive2(LOTTO Lotto);
+
+//등차수열 확인
+bool checkDiff(LOTTO Lotto, int diff);
+bool checkDifferentialSequence(LOTTO Lotto);
+
+void setMustNumber(int* number, int size);
+bool isMustNumber(LOTTO Lotto);
+void setWrongNumber(int* number, int size);
+bool isWrongNumber(LOTTO Lotto);
 
 #endif 
