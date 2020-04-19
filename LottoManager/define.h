@@ -25,7 +25,7 @@ typedef unsigned long long int ull;
 #define ODD_NUMBER_5 (1ull << 11)
 #define ODD_NUMBER_6 (1ull << 12)
 
-
+//PRIME NUMBER °¹¼ö..?
 
 
 
