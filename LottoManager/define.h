@@ -17,13 +17,13 @@ typedef unsigned long long int ull;
 #define CONSECUTIVE_5 (1ull << 4)
 #define CONSECUTIVE_6 (1ull << 5)
 
-#define EVEN_NUMBER_0 (1ull << 6)
-#define EVEN_NUMBER_1 (1ull << 7)
-#define EVEN_NUMBER_2 (1ull << 8)
-#define EVEN_NUMBER_3 (1ull << 9)
-#define EVEN_NUMBER_4 (1ull << 10)
-#define EVEN_NUMBER_5 (1ull << 11)
-#define EVEN_NUMBER_6 (1ull << 12)
+#define ODD_NUMBER_0 (1ull << 6)
+#define ODD_NUMBER_1 (1ull << 7)
+#define ODD_NUMBER_2 (1ull << 8)
+#define ODD_NUMBER_3 (1ull << 9)
+#define ODD_NUMBER_4 (1ull << 10)
+#define ODD_NUMBER_5 (1ull << 11)
+#define ODD_NUMBER_6 (1ull << 12)
 
 
 

@@ -60,11 +60,27 @@ int makeSum(LOTTO Lotto)
 	return Lotto.number[0] + Lotto.number[1] + Lotto.number[2] + Lotto.number[3] + Lotto.number[4] + Lotto.number[5];
 }
 
+int countOddNumber(LOTTO Lotto)
+{
+	return (Lotto.number[0] & 1) + (Lotto.number[1] & 1) + (Lotto.number[2] & 1) + (Lotto.number[3] & 1) + (Lotto.number[4] & 1) + (Lotto.number[5] & 1);
+}
+
+int countPrimeNumber(LOTTO Lotto)
+{
+	int i;
+	int ret = 0;
+	
+	for (i = 0; i < 6;i++) ret += isPrime(Lotto.number[i]);
+	return ret;
+}
+
 void makeStatisticsInfo(LOTTO& Lotto)
 {
 	Lotto.key = makeKey(Lotto);
 	Lotto.bitNumber = makeBitNumber(Lotto);
 	Lotto.sum = makeSum(Lotto);
+	Lotto.numOfOddNum = countOddNumber(Lotto);
+	Lotto.numOfPrimeNum = countPrimeNumber(Lotto);
 }
 
 void getAllNumber()

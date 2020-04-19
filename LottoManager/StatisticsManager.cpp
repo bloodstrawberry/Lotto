@@ -18,6 +18,13 @@ int END_NUMBER;
 int CONSECUTIVE_NUMBERS[7][50];
 int JUMP_NUMBERS[7][50];
 
+int primeNumber[] = { 0,
+						0,1,1,0,1,0,1,0,0,0,
+						1,0,1,0,0,0,1,0,1,0,
+						0,0,1,0,0,0,0,0,1,0,
+						1,0,0,0,0,0,1,0,0,0,
+						1,0,1,0,0,0,1,0,0,0, };
+
 unsigned long long seed = 5; // seed can be changed
 unsigned int random(void)
 {
@@ -65,6 +72,13 @@ void showPastLottoResult(LOTTO Lotto, int offset)
 
 	}
 
+}
+
+void showAllPastLottoResult(int offset)
+{
+	int i;
+	for (i = 1; i <= NumOfWinLotto;i++)
+		showPastLottoResult(LottoWinningNumber[i], offset);
 }
 
 void showBinary_long(ull n)
@@ -186,4 +200,9 @@ void showJumpNumbers()
 
 	for (int i = 0; i < 45;i++)
 		printf("%d, %d] : %d\n", index[i], index[i] + 2, value[i]);
+}
+
+bool isPrime(int num)
+{
+	return primeNumber[num];
 }

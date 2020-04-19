@@ -14,7 +14,10 @@ typedef struct _lotto
 	int sum;
 	ull status;
 	ull key;
+	int numOfOddNum;
+	int numOfPrimeNum;
 
+	int countOfPastRanks[6];
 	
 	bool deleteFlag;
 }LOTTO;
@@ -29,6 +32,8 @@ bool isMySuckNumber(LOTTO Lotto);
 ull makeKey(LOTTO Lotto);
 ull makeBitNumber(LOTTO Lotto);
 int makeSum(LOTTO Lotto);
+int countOddNumber(LOTTO Lotto);
+
 void makeStatisticsInfo(LOTTO& Lotto);
 
 void getAllNumber();

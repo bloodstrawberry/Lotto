@@ -23,9 +23,14 @@ int main()
 	seed = rand();
 
 	/* ---------------------- Statistics ---------------------- */
+	printf("%d\n", sizeof(LOTTO));
+
 
 	getLottoWinningNumber(); //당첨 번호 
 	getMySuckNumber(); //실패한 나의 번호
+
+	showAllPastLottoResult(4);
+	return 0;
 
 	//연속된 2자리 번호
 	findAllConsecutiveNumbers();
