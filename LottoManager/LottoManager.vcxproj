@@ -126,6 +126,7 @@
   <ItemGroup>
     <Text Include="input.txt" />
     <Text Include="LottoWinningNumber.txt" />
+    <Text Include="Memo.txt" />
     <Text Include="MySuckNumber.txt" />
     <Text Include="output.txt" />
   </ItemGroup>

@@ -41,6 +41,9 @@
     <Text Include="MySuckNumber.txt">
       <Filter>리소스 파일</Filter>
     </Text>
+    <Text Include="Memo.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">

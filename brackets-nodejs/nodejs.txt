@@ -3,7 +3,8 @@ http://brackets.io/ 설치
 파일 -> 확장 기능 관리자
 Custom Work 설치
 Brackets Icons 설치
-
+beautyfi 설치
+c+s+L 자동 줄맞춤
 
 https://nodejs.org/en/
 
