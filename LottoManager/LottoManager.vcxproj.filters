@@ -44,6 +44,66 @@
     <Text Include="Memo.txt">
       <Filter>리소스 파일</Filter>
     </Text>
+    <Text Include="monthly.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="HotNumber.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="ColdNumber.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="ShowWinningNumber.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="StatisticsWinningNumber.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="PickNumbers.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="OneNumber.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="ShowConsecutiveNumber.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="ShowJumpNumber.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="ShowAllStatistics.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair2.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair3.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair4.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair2_bonus.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair3_bonus.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair4_bonus.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair1.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair1_bonus.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="Pair1_onlybonus.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
+    <Text Include="ShowLatest.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">

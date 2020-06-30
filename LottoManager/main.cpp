@@ -2,32 +2,86 @@
 #include <stdlib.h>
 #include <time.h>
 #include <map>
+#include <vector>
+#include <algorithm>
 #include <iostream>
 
 #include "LottoManager.h"
 #include "FileManager.h"
 #include "StatisticsManager.h"
 
+
 using namespace std;
 
 extern int NumOfWinLotto;
 extern int NumOfSuckLotto;
-
+extern LOTTO LottoWinningNumber[];
 extern unsigned long long seed;
-
+extern int SHUFFLE;
 LOTTO testLotto;
+
+
 
 int main()
 {
 	srand(time(NULL)); 
 	seed = rand();
 
-	/* ---------------------- Statistics ---------------------- */
-	printf("%d\n", sizeof(LOTTO));
-
-
+	/* ---------------------- Input ---------------------- */
+	
 	getLottoWinningNumber(); //당첨 번호 
 	getMySuckNumber(); //실패한 나의 번호
+	getNumbers(); //hot, cold, except
+
+	/* ---------------------- Statistics ---------------------- */
+
+	setStatistics(817, 917);
+	statistics();
+
+	/* ---------------------- PickUp ---------------------- */
+	int mNumber[] = { 23 };
+	int msize = sizeof(mNumber) / sizeof(int);
+	setMustNumber(mNumber, msize);
+
+	int wNumber[] = { 1,2,3,4,7,16,21,22,26,27,34,39};
+	int wsize = sizeof(wNumber) / sizeof(int);
+	setWrongNumber(wNumber, wsize);
+
+	setPrimeNumber(1, 3);
+	setMustEvenNumber(3, 4);
+	setPastRank2(0, 0);
+	setPastRank3(0, 0);
+	setPastRank4(1, 1);
+
+	setHotNumber(1, 4);
+	setColdNumber(1, 4);
+	setOneNumber(2,2);
+
+	setACNumber(8, 8);
+
+
+
+	SHUFFLE = 1;
+	getAllNumber(); //Fileter. -> 이월된 번호 통계...해서...음....
+
+
+	
+
+
+	return 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	showAllPastLottoResult(4);
 	return 0;
@@ -48,14 +102,6 @@ int main()
 	//delete
 	//shuffle...?
 
-	// pick up ---------------------------------------------------
-	int mNumber[] = { 42,43 };
-	int msize = sizeof(mNumber) / sizeof(int);
-	setMustNumber(mNumber, msize);
-
-	int wNumber[] = { 1,2,3,4,5,10,11,9,16, 24, 8 };
-	int wsize = sizeof(wNumber) / sizeof(int);
-	setWrongNumber(wNumber, wsize);
 
 	//pick
 	//pick up and statistics

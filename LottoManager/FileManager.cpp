@@ -21,6 +21,16 @@ extern int NumOfSuckLotto;
 extern LOTTO MySuckNumber[];
 extern map<ull, bool> MapMySuckNumber;
 
+extern int NumOfHotNumber;
+extern int HotNumber[50];
+ 
+extern int NumOfColdNumber;
+extern int ColdNumber[50];
+ 
+
+extern int NumOfOneNumber;
+extern int OneNumber[50];
+
 void getLottoWinningNumber()
 {
 	FILE *fp = fopen(LOTTO_WINNING_NUMBER, "r");
@@ -106,3 +116,48 @@ void getMySuckNumber()
 	fclose(fp);
 }
 
+void getNumber(const char* fileName, int Numbers[], int count)
+{
+	FILE *fp = fopen(fileName, "r");
+
+	if (fp == NULL)
+	{
+		printf("Wrong Input : %s\n", fileName);
+		exit(1);
+	}
+
+	count = 0;
+
+
+	int n1;
+	while (fscanf(fp, "%d", &n1) != EOF)
+	{
+		count++;
+		Numbers[n1] = 1;
+	}
+
+	fclose(fp);
+}
+
+void getNumbers()
+{
+	getNumber("HotNumber.txt", HotNumber, NumOfHotNumber);
+	getNumber("ColdNumber.txt", ColdNumber, NumOfColdNumber);
+	getNumber("OneNumber.txt", OneNumber, NumOfOneNumber);
+
+	printf("Hot :\n");
+	for (int i = 1; i <= 45; i++)
+		if (HotNumber[i]) printf("%d ", i);
+	putchar('\n');
+
+	printf("Cold :\n");
+	for (int i = 1; i <= 45; i++)
+		if (ColdNumber[i]) printf("%d ", i);
+	putchar('\n');
+
+	printf("One :\n");
+	for (int i = 1; i <= 45; i++)
+		if (OneNumber[i]) printf("%d ", i);
+	putchar('\n');
+
+}

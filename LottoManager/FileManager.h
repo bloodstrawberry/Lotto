@@ -6,7 +6,7 @@
 
 void getLottoWinningNumber();
 void getMySuckNumber();
-
-
+void getNumber(const char* fileName, int Numbers[], int count);
+void getNumbers();
 
 #endif 

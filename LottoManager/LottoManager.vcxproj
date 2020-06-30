@@ -124,11 +124,31 @@
     <ClCompile Include="StatisticsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="ColdNumber.txt" />
+    <Text Include="OneNumber.txt" />
+    <Text Include="HotNumber.txt" />
     <Text Include="input.txt" />
     <Text Include="LottoWinningNumber.txt" />
     <Text Include="Memo.txt" />
+    <Text Include="monthly.txt" />
     <Text Include="MySuckNumber.txt" />
     <Text Include="output.txt" />
+    <Text Include="Pair1.txt" />
+    <Text Include="Pair1_bonus.txt" />
+    <Text Include="Pair1_onlybonus.txt" />
+    <Text Include="Pair2.txt" />
+    <Text Include="Pair2_bonus.txt" />
+    <Text Include="Pair3.txt" />
+    <Text Include="Pair3_bonus.txt" />
+    <Text Include="Pair4.txt" />
+    <Text Include="Pair4_bonus.txt" />
+    <Text Include="PickNumbers.txt" />
+    <Text Include="ShowAllStatistics.txt" />
+    <Text Include="ShowConsecutiveNumber.txt" />
+    <Text Include="ShowJumpNumber.txt" />
+    <Text Include="ShowLatest.txt" />
+    <Text Include="ShowWinningNumber.txt" />
+    <Text Include="StatisticsWinningNumber.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h" />
