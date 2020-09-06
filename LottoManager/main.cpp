@@ -9,6 +9,8 @@
 #include "LottoManager.h"
 #include "FileManager.h"
 #include "StatisticsManager.h"
+#include "PensionManager.h"
+#include "ReactManager.h"		  
 
 
 using namespace std;
@@ -18,14 +20,34 @@ extern int NumOfSuckLotto;
 extern LOTTO LottoWinningNumber[];
 extern unsigned long long seed;
 extern int SHUFFLE;
+extern int NumOfWinPension;
+extern PENSION PensionWinningNumber[10000];
+
 LOTTO testLotto;
 
+extern int sortPension[1000000];
+extern int MySuckPensionNumber[1000000];
 
+#define F_PENSIO
 
 int main()
 {
 	srand(time(NULL)); 
 	seed = rand();
+
+#ifdef F_PENSION
+	//suck number 정렬하기 앞글자만 따서 check 하기 
+	getPensionWinningNumber();
+	getMyPensionSuckNumber();
+	pensionSort();
+
+	int pick = 929876;
+	if (sortPension[pick] || MySuckPensionNumber[pick]) printf("no way!! %d %d %d\n", pick, sortPension[pick], MySuckPensionNumber[pick]);
+
+
+	//for (int i = 1; i <= NumOfWinPension;i++) showPensionNumber(PensionWinningNumber[i]);
+#else
+
 
 	/* ---------------------- Input ---------------------- */
 	
@@ -35,38 +57,71 @@ int main()
 
 	/* ---------------------- Statistics ---------------------- */
 
-	setStatistics(817, 917);
+	setStatistics(728, 928);
+	setLatestStatistics(50);
 	statistics();
 
 	/* ---------------------- PickUp ---------------------- */
-	int mNumber[] = { 23 };
+	int mNumber[] = { 3, 14, 37 }; 
 	int msize = sizeof(mNumber) / sizeof(int);
 	setMustNumber(mNumber, msize);
 
-	int wNumber[] = { 1,2,3,4,7,16,21,22,26,27,34,39};
+	int wNumber[] = {
+		35, //완제수
+		38, //혜성
+		44, //홍표
+		10, //도건
+		13, //김돤
+		18, //옥형
+		9, 5, // 9월 5일
+		27, //927회
+		6, //이전 보너스
+		
+		24, // YES 24 ...
+
+		1, 2,
+
+		9,17,21,26,34,38, // 김돤 수
+	};
+
+
 	int wsize = sizeof(wNumber) / sizeof(int);
 	setWrongNumber(wNumber, wsize);
 
-	setPrimeNumber(1, 3);
-	setMustEvenNumber(3, 4);
 	setPastRank2(0, 0);
 	setPastRank3(0, 0);
-	setPastRank4(1, 1);
+	setPastRank4(0, 2);	
+	
+	setMustEvenNumber(6, 5);
+	setPrimeNumber(1, 3);
 
-	setHotNumber(1, 4);
-	setColdNumber(1, 4);
-	setOneNumber(2,2);
+	setHotNumber(1, 5);
+	setColdNumber(1, 5);
+	setOneNumber(1, 3);
 
-	setACNumber(8, 8);
+	setColor(4, 4);
+
+	int mColor[] = { PURPLE, }; // YELLOW, BLUE, RED, PURPLE, GREEN
+	int csize = sizeof(mColor) / sizeof(int);
+	setMustColor(mColor, csize);
+
+	setACNumber(8, 9);
+	setNextNumber(1, 1);
+
+	set_Jump_Cons2_Cons22_Cons3(NO_CARE, NEED, DELETE, DELETE);
 
 
 
 	SHUFFLE = 1;
 	getAllNumber(); //Fileter. -> 이월된 번호 통계...해서...음....
 
+	latestAnalysis(false);
+	latestAnalysis(true);
+#endif
 
-	
-
+#if 01
+	makeJson();
+#endif
 
 	return 0;
 

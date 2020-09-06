@@ -39,8 +39,17 @@ int upperOneNumber = 100;
 int underAC = -100;
 int upperAC = 100;
 
+int underColor = -100;
+int upperColor = 100;
+
+int underNext = -100;
+int upperNext = 100;
+
 int mustNumber[50];
 int mustSize;
+
+int mustColor[10];
+int mustColorSize;
 
 int underPrimeNumber = -100;
 int upperPrimeNumber = 100;
@@ -58,6 +67,24 @@ int upperRank4 = 100;
 
 int SHUFFLE;
 extern HotColdOne hotColdOne[2000];
+
+extern int NumOfHotNumber;
+extern int HotNumber[50];
+
+extern int NumOfColdNumber;
+extern int ColdNumber[50];
+
+
+extern int NumOfOneNumber;
+extern int OneNumber[50];
+
+int SET_JUMP = -1;
+int SET_CON2 = -1;
+int SET_CON22 = -1;
+int SET_CON3 = -1;
+
+extern int colorBoard[47];
+
 
 void setMustNumber(int* number, int size)
 {
@@ -81,8 +108,14 @@ int wrongSize;
 void setWrongNumber(int* number, int size)
 {
 	wrongSize = size;
-	for (int i = 0; i < size;i++)
-		wrongNumber[number[i]] = 1;
+	for (int i = 0; i < size;i++) wrongNumber[number[i]] = 1;
+	printf(">> wrong number\n");
+	
+	int cnt = 0;
+	for (int i = 1; i <= 45; i++)
+		if (wrongNumber[i]) printf("%d ", i), cnt++;
+	putchar('\n');
+	printf(">> num of w : %d\n", cnt);
 }
 
 bool isWrongNumber(LOTTO& Lotto)
@@ -146,6 +179,18 @@ void setACNumber(int under, int upper)
 {
 	underAC = under;
 	upperAC = upper;
+}
+
+void setColor(int under, int upper)
+{
+	underColor = under;
+	upperColor = upper;
+}
+
+void setNextNumber(int under, int upper)
+{
+	underNext = under;
+	upperNext = upper;
 }
 
 void showLottoNumber(int index)
@@ -224,6 +269,13 @@ void outputPickNumber(int cnt)
 	vector<int>& vcold = hotColdOne[NumOfWinLotto + 1].coldNum;
 	vector<int>& vone = hotColdOne[NumOfWinLotto + 1].oneNum;
 
+	for (int i = 0; i < vhot.size(); i++) printf("%d ", vhot[i]); putchar('\n');
+	for (int i = 1; i <= 45; i++) if (HotNumber[i]) printf("%d ", i); putchar('\n');
+	for (int i = 0; i < vcold.size(); i++) printf("%d ", vcold[i]); putchar('\n');
+	for (int i = 1; i <= 45; i++) if (ColdNumber[i]) printf("%d ", i); putchar('\n');
+	for (int i = 0; i < vone.size(); i++) printf("%d ", vone[i]); putchar('\n');
+	for (int i = 1; i <= 45; i++) if (OneNumber[i]) printf("%d ", i); putchar('\n');
+
 	for (int i = 0; i < cnt;i++)
 	{
 		LOTTO& lotto = AllLottoNumber[i];
@@ -239,9 +291,9 @@ void outputPickNumber(int cnt)
 		for (int i = 0; i < vone.size(); i++) chkone[vone[i]]++;
 
 		char buf[10];
-		sprintf(buf, "%4d] ", i);
+		sprintf(buf, "%4d] ", i + 1);
 		fout << buf;
-		for (int k = 0; k < 7;k++)
+		for (int k = 0; k < 6;k++)
 		{
 			bool hotflag = chkhot[lotto.number[k]] && (k != 6);
 			bool coldflag = chkcold[lotto.number[k]] && (k != 6);
@@ -292,6 +344,9 @@ void outputPickNumber(int cnt)
 		sprintf(evenoddprime, "[%3d] ", makeSum(lotto));
 		fout << evenoddprime;
 
+		sprintf(evenoddprime, "[Clr: %d] ", lotto.countOfColor);
+		fout << evenoddprime;
+
 		lotto.AC = makeAC(lotto);
 		sprintf(evenoddprime, "[AC: %2d] ", lotto.AC);
 		fout << evenoddprime;
@@ -300,7 +355,25 @@ void outputPickNumber(int cnt)
 		fout << endl;
 		fout << endl;
 	}
-		
+	
+	fout << endl;
+	for (int i = 0; i < cnt;i++)
+	{
+		LOTTO& lotto = AllLottoNumber[i];
+
+		char buf[10];
+		sprintf(buf, "%4d] ", i + 1);
+		fout << buf;
+
+		for (int k = 0; k < 6;k++)
+		{
+			fout << lotto.number[k];
+			fout << " ";
+		}
+		fout << endl;
+	}
+	
+
 	fout.close();
 }
 
@@ -321,6 +394,53 @@ void makeHotColdOne(LOTTO& Lotto)
 	Lotto.hot = hot;
 	Lotto.cold = cold;
 	Lotto.one = one;
+}
+
+int countNext(LOTTO& end, LOTTO& lotto)
+{
+	int cnt = 0;
+	int check[46] = { 0 };
+
+	for (int k = 0; k < 6;k++) check[end.number[k]] = 1;
+	for (int k = 0; k < 6;k++) cnt += check[lotto.number[k]];
+	
+	return cnt;
+}
+
+int checkJumpNumber(LOTTO& lotto)
+{
+	for (int k = 0; k < 5;k++)
+		if (lotto.number[k + 1] - lotto.number[k] == 2) return true;
+
+	return false;
+}
+
+void set_Jump_Cons2_Cons22_Cons3(int jump, int cons, int cons22, int cons3)
+{
+	SET_JUMP = jump;
+	SET_CON2 = cons;
+	SET_CON22 = cons22;
+	SET_CON3 = cons3;
+}
+
+void setMustColor(int* color, int size)
+{
+	mustColorSize = size;
+	for (int i = 0; i < size;i++)
+		mustColor[color[i]] = 1;
+}
+
+
+int isMustColor(LOTTO& lotto)
+{
+	int checkBoard[10] = { 0 };
+
+	int cnt = 0;
+	for (int k = 0; k < 6;k++) checkBoard[colorBoard[lotto.number[k]]] = 1;
+	for (int k = 1; k <= 5;k++) cnt += checkBoard[k] && mustColor[k];
+
+	if (cnt == mustColorSize) return true;
+	return false;
 }
 
 bool Filter(LOTTO& Lotto)
@@ -352,11 +472,33 @@ bool Filter(LOTTO& Lotto)
 	if (checkConsecutive6(Lotto)) return true;  
 	if (checkConsecutive5(Lotto)) return true;
 	if (checkConsecutive4(Lotto)) return true;
-	if (checkConsecutive3(Lotto)) return true;
-	if (checkConsecutive2_2(Lotto)) return true;
+
+	if (SET_CON3 == NO_CARE);
+	else if (SET_CON3 == NEED && checkConsecutive3(Lotto) == false) return true;
+	else if (SET_CON3 == DELETE && checkConsecutive3(Lotto) == true) return true;
+
+	if (SET_JUMP == NO_CARE);
+	else if (SET_JUMP == NEED && checkJumpNumber(Lotto) == false) return true;
+	else if (SET_JUMP == DELETE && checkJumpNumber(Lotto) == true) return true;
+
+	if (SET_CON2 == NO_CARE);
+	else if (SET_CON2 == NEED && checkConsecutive2(Lotto) == false) return true;
+	else if (SET_CON2 == DELETE && checkConsecutive2(Lotto) == true) return true;
+
+	if (SET_CON22 == NO_CARE);
+	else if (SET_CON22 == NEED && checkConsecutive2_2(Lotto) == false) return true;
+	else if (SET_CON22 == DELETE && checkConsecutive2_2(Lotto) == true) return true;
+
+	
+
+
+	if (isMustColor(Lotto) == false) return true;
 
 	if (isLottoWinningNumber(Lotto)) return true;
 	if (isMySuckNumber(Lotto)) return true;
+
+
+
 	if (checkDiff(Lotto, 2)) return true;
 	if (checkDiff(Lotto, 3)) return true;
 	if (checkDiff(Lotto, 4)) return true;
@@ -376,8 +518,15 @@ bool Filter(LOTTO& Lotto)
 	if (!(underColdNumber <= Lotto.cold && Lotto.cold <= upperColdNumber)) return true;
 	if (!(underOneNumber <= Lotto.one && Lotto.one <= upperOneNumber))     return true;
 
+	countColor(Lotto);
+	if (!(underColor <= Lotto.countOfColor && Lotto.countOfColor <= upperColor)) return true;
+
 	Lotto.AC = makeAC(Lotto);
 	if (!(underAC <= Lotto.AC && Lotto.AC <= upperAC))     return true;
+
+	LOTTO& endLotto = LottoWinningNumber[NumOfWinLotto];
+	int cntNext = countNext(endLotto, Lotto);
+	if (!(underNext <= cntNext && cntNext <= upperNext)) return true;
 
 	return false;
 }
@@ -433,7 +582,7 @@ void getAllNumber()
 		exit(1);
 	}
 
-	printf("hello! %d\n", cnt);
+	printf("hello! %d / %d\n", cnt, testCnt);
 	if(SHUFFLE) shuffle(cnt);
 	outputPickNumber(cnt);
 	//for (int i = 0; i < cnt;i++) showLottoNumber(AllLottoNumber[i]);

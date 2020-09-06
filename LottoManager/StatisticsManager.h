@@ -76,8 +76,15 @@ void showJumpNumbers();
 bool isPrime(int num);
 
 void setStatistics(int under, int upper);
+void setLatestStatistics(int latest);
+
 void statistics();
 void showHotColdOne(int result);
+
+void latestAnalysis(bool bonus);
+
+
+void countColor(LOTTO& Lotto);
 
 #endif
 

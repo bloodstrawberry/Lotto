@@ -121,10 +121,14 @@
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="LottoManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PensionManager.cpp" />
+    <ClCompile Include="ReactManager.cpp" />
     <ClCompile Include="StatisticsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="A.txt" />
     <Text Include="ColdNumber.txt" />
+    <Text Include="MySuckPensionNumber.txt" />
     <Text Include="OneNumber.txt" />
     <Text Include="HotNumber.txt" />
     <Text Include="input.txt" />
@@ -142,11 +146,15 @@
     <Text Include="Pair3_bonus.txt" />
     <Text Include="Pair4.txt" />
     <Text Include="Pair4_bonus.txt" />
+    <Text Include="PensionSort.txt" />
+    <Text Include="PensionWinningNumber.txt" />
     <Text Include="PickNumbers.txt" />
     <Text Include="ShowAllStatistics.txt" />
+    <Text Include="ShowAnalysis.txt" />
+    <Text Include="ShowAnalysisBonus.txt" />
+    <Text Include="ShowConsAndJump.txt" />
     <Text Include="ShowConsecutiveNumber.txt" />
     <Text Include="ShowJumpNumber.txt" />
-    <Text Include="ShowLatest.txt" />
     <Text Include="ShowWinningNumber.txt" />
     <Text Include="StatisticsWinningNumber.txt" />
   </ItemGroup>
@@ -154,7 +162,12 @@
     <ClInclude Include="define.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="LottoManager.h" />
+    <ClInclude Include="PensionManager.h" />
+    <ClInclude Include="ReactManager.h" />
     <ClInclude Include="StatisticsManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LottoWinningNumber.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

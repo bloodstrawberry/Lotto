@@ -36,6 +36,8 @@ typedef struct _lotto
 	int AC;
 
 	int countOfPastRanks[6];
+	int countOfColor;
+	int countOfColorBonus;
 
 	MYTIME mtime;
 }LOTTO;
@@ -78,6 +80,9 @@ bool isWrongNumber(LOTTO& Lotto);
 
 void setPrimeNumber(int under, int upper);
 void setMustEvenNumber(int under, int even);
+
+void setMustColor(int* color, int size);
+
 void setPastRank2(int under, int upper);
 void setPastRank3(int under, int upper);
 void setPastRank4(int under, int upper);
@@ -87,5 +92,10 @@ void setColdNumber(int under, int upper);
 void setOneNumber(int under, int upper);
 
 void setACNumber(int under, int upper);
+void setColor(int under, int upper);
+
+void setNextNumber(int under, int upper);
+
+void set_Jump_Cons2_Cons22_Cons3(int jump, int cons, int cons22, int cons3);
 
 #endif 

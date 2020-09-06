@@ -15,8 +15,12 @@ using namespace std;
 extern int NumOfWinLotto;
 extern LOTTO LottoWinningNumber[];
 
+int REAL_END_NUMBER;
 int START_NUMBER;
 int END_NUMBER;
+
+int LATEST_NUMBER;
+int LATEST_DIFF;
 
 int CONSECUTIVE_NUMBERS[7][50];
 int JUMP_NUMBERS[7][50];
@@ -108,6 +112,28 @@ void makePastLottoResult(LOTTO& Lotto)
 	}
 }
 
+int colorBoard[47] = { 0,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+	5, 5, 5, 5, 5,
+};
+
+void countColor(LOTTO& Lotto)
+{
+	int checkBoard[7] = { 0 };
+
+	for (int k = 0; k < 6;k++)
+		checkBoard[colorBoard[Lotto.number[k]]] = 1;
+
+	int cnt = 0;
+	for (int i = 1; i <= 5;i++)
+		if (checkBoard[i]) cnt++;
+
+	Lotto.countOfColor = cnt;
+	Lotto.countOfColorBonus = cnt + !checkBoard[colorBoard[Lotto.bonus]];
+}
 
 void showPastLottoResult(LOTTO Lotto, int offset)
 {
@@ -238,7 +264,7 @@ void showConsecutiveNumbers()
 			fout << endl;
 		}
 	}
-		
+
 	fout.close();
 }
 
@@ -273,7 +299,7 @@ void showJumpNumbers()
 
 	//for (int i = 1; i <= 44;i++) 
 	//if(consecutive_numbers[2][i]) printf("%d, %d] : %d\n", i, i+1, consecutive_numbers[2][i]);
-	
+
 	printf("\n================ show jump number ==============\n");
 
 	int index[50] = { 0 };
@@ -298,7 +324,7 @@ void showJumpNumbers()
 		}
 	}
 
-	
+
 	for (int i = 0; i < 45;i++)
 	{
 		//if (index[i] <= 45) printf("%d, %d] : %d\n", index[i], index[i] + 1, value[i]);
@@ -326,12 +352,40 @@ bool isPrime(int num)
 
 void setStatistics(int under, int upper)
 {
+	REAL_END_NUMBER = upper;
 	START_NUMBER = under;
 	END_NUMBER = upper;
 
 	if (END_NUMBER > NumOfWinLotto) END_NUMBER = NumOfWinLotto;
 	endLotto = LottoWinningNumber[END_NUMBER];
+
 	for (int i = 0; i < 6;i++) endNumber[endLotto.number[i]] = 1;
+}
+
+void setLatestStatistics(int latest)
+{
+	LATEST_NUMBER = NumOfWinLotto - latest + 1;
+	LATEST_DIFF = latest;
+}
+
+
+int getCrossCount(int index, bool bonus)
+{
+	int ret = 0;
+	LOTTO& beforeLotto = LottoWinningNumber[index - 1];
+	LOTTO& nowLotto = LottoWinningNumber[index];
+
+	int check[50] = { 0 };
+	for (int k = 0; k < 6 + bonus;k++)
+		check[beforeLotto.number[k]] = 1;
+	
+	for (int k = 0; k < 6 + bonus;k++)
+	{
+		if (check[nowLotto.number[k] - 1]) ret++;
+		if (check[nowLotto.number[k] + 1]) ret++;
+	}
+	
+	return ret;
 }
 
 void showWinningNumbers()
@@ -343,7 +397,7 @@ void showWinningNumbers()
 	{
 		int cnt = 0;
 		LOTTO& lotto = LottoWinningNumber[i];
-		
+
 		lotto.mtime = getTime(i);
 
 		for (int k = 1; k <= 45;k++)
@@ -386,11 +440,45 @@ void showWinningNumbers()
 				cnt++;
 			}
 			else fout << "□";
-			
+
 		}
+
+		int crossCount = getCrossCount(i, false);
+		int crossCountBonus = getCrossCount(i, true);
+		if (crossCount == 0 && crossCountBonus) fout << "    ◀ " << crossCount << ", " << crossCountBonus;
+		else if (crossCount || crossCountBonus) fout << "    ◁ " << crossCount<< ", " << crossCountBonus;
 
 		fout << endl;
 	}
+	fout << "1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 " << endl;
+	fout << endl;
+
+
+
+	char buff[100];
+	for (int i = NumOfWinLotto; i >= LATEST_NUMBER; i--)
+	{
+
+
+		int check[50] = { 0 };
+		for (int k = i; k <= NumOfWinLotto;k++)
+		{
+			LOTTO& lotto = LottoWinningNumber[k];
+			for (int t = 0; t < 6;t++)
+				check[lotto.number[t]] = 1;
+		}
+
+		for (int k = 1; k <= 45;k++)
+		{
+			if (check[k]) fout << "■";
+			else fout << "□";
+		}
+
+		fout << "    << " << i << endl;
+	}
+	
+
+
 
 	fout.close();
 }
@@ -422,11 +510,11 @@ void checkDayMonth(LOTTO& lotto, char* buff, int result)
 		table[lotto.number[k]] = 1;
 
 	int len = 0;
-	
+
 	if (table[lotto.mtime.month])
 	{
 		len += sprintf(buff, "[ M: %2d, ", lotto.mtime.month);
-		if(START_NUMBER <= result && result <= END_NUMBER) monthCount[lotto.mtime.month]++;
+		if (START_NUMBER <= result && result <= END_NUMBER) monthCount[lotto.mtime.month]++;
 	}
 	else
 	{
@@ -463,7 +551,7 @@ void checkDayMonth(LOTTO& lotto, char* buff, int result)
 	}
 	else
 	{
-		len += sprintf(buff + len, "MD:    ] ");
+		len += sprintf(buff + len, "DB:    ] ");
 		if (START_NUMBER <= result && result <= END_NUMBER) ndayCountb[lotto.mtime.day]++;
 	}
 }
@@ -476,7 +564,7 @@ void showStatisticsWinningNumber()
 	for (int i = 1; i <= NumOfWinLotto;i++)
 	{
 		LOTTO& lotto = LottoWinningNumber[i];
-		
+
 		int hot, cold, one;
 		vector<int>& vhot = hotColdOne[i].hotNum;
 		vector<int>& vcold = hotColdOne[i].coldNum;
@@ -493,7 +581,7 @@ void showStatisticsWinningNumber()
 
 
 		char buf[100];
-		sprintf(buf, "%4d] { %4d/%02d/%02d } ", i,lotto.mtime.year, lotto.mtime.month, lotto.mtime.day);
+		sprintf(buf, "%4d] { %4d/%02d/%02d } ", i, lotto.mtime.year, lotto.mtime.month, lotto.mtime.day);
 		fout << buf;
 		for (int k = 0; k < 7;k++)
 		{
@@ -512,7 +600,7 @@ void showStatisticsWinningNumber()
 			if (coldflag) fout << " ";
 			if (oneflag) fout << ")";
 
-			
+
 			if (k == 6) fout << ">";
 			fout << " ";
 		}
@@ -527,11 +615,11 @@ void showStatisticsWinningNumber()
 		for (int k = 1; k <= 5;k++)
 		{
 			fout << lotto.countOfPastRanks[k];
-			
+
 			fout << " ";
 		}
 		fout << "] ";
-		
+
 		int odd = countOddNumber(lotto);
 		int even = 6 - odd;
 		int prime = countPrimeNumber(lotto);
@@ -540,6 +628,9 @@ void showStatisticsWinningNumber()
 		sprintf(evenoddprime, "[ %d vs %d / %d ] ", even, odd, prime);
 		fout << evenoddprime;
 
+		lotto.numOfOddNum = odd;
+		lotto.numOfPrimeNum = prime;
+
 		odd += (lotto.bonus & 1);
 		even += (!(lotto.bonus & 1));
 		prime += isPrime(lotto.bonus);
@@ -547,21 +638,36 @@ void showStatisticsWinningNumber()
 		fout << evenoddprime;
 
 		sprintf(evenoddprime, "[ %d / %d / %d ] ", hot, cold, one);
-		
+
 		fout << evenoddprime;
 
-		lotto.numOfOddNum	= odd;
-		lotto.numOfPrimeNum = prime;
-		lotto.numOfHot		= hot;
-		lotto.numOfCold		= cold;
-		lotto.numOfOne		= one;
+
+		lotto.numOfHot = hot;
+		lotto.numOfCold = cold;
+		lotto.numOfOne = one;
 
 		sprintf(evenoddprime, "[%3d] ", makeSum(lotto));
+		fout << evenoddprime;
+
+		countColor(lotto);
+		sprintf(evenoddprime, "[Clr : %d / %d]", lotto.countOfColor, lotto.countOfColorBonus);
+		fout << evenoddprime;
+
+
+		int tenCheck[6] = { 0,1,1,1,1,1 };
+		for (int k = 0; k < 6;k++) tenCheck[colorBoard[lotto.number[k]]] = 0;
+		sprintf(evenoddprime, "[%c %c %c %c %c]", 
+			tenCheck[1] ? 'O' : 'x', 
+			tenCheck[2] ? 'O' : 'x', 
+			tenCheck[3] ? 'O' : 'x', 
+			tenCheck[4] ? 'O' : 'x', 
+			tenCheck[5] ? 'O' : 'x');
 		fout << evenoddprime;
 
 		lotto.AC = makeAC(lotto);
 		sprintf(evenoddprime, "[AC: %2d] ", lotto.AC);
 		fout << evenoddprime;
+
 
 		vector<int> nextNumber;
 		LOTTO& before = LottoWinningNumber[i - 1];
@@ -573,11 +679,11 @@ void showStatisticsWinningNumber()
 			fout << "[ ";
 			for (int k = 0; k < nextNumber.size();k++)
 			{
-				if(k == nextNumber.size() - 1) sprintf(buff, "%2d ", nextNumber[k]);
+				if (k == nextNumber.size() - 1) sprintf(buff, "%2d ", nextNumber[k]);
 				else sprintf(buff, "%2d ", nextNumber[k]);
 				fout << buff;
 			}
-			
+
 
 			bool R_BFlag = false;
 			for (int k = 0; k < 6;k++)
@@ -609,7 +715,7 @@ void showStatisticsWinningNumber()
 
 			if (R_BFlag)
 			{
-				sprintf(buff, "R->B <%d> ",lotto.bonus);
+				sprintf(buff, "R->B <%d> ", lotto.bonus);
 				fout << buff;
 			}
 
@@ -619,15 +725,17 @@ void showStatisticsWinningNumber()
 				fout << buff;
 			}
 
-			
+
 			fout << "]";
 		}
 
 
 		fout << endl;
 		fout << endl;
-		
+
 	}
+
+
 
 	fout.close();
 }
@@ -684,7 +792,7 @@ void findHotColdOne(int result)
 		for (int k = 0; k < 6;k++)
 			check[LottoWinningNumber[i].number[k]]++;
 	}
-	
+
 	for (int i = 1; i <= 45;i++)
 	{
 		if ((checkx2[i] && check[i]) || (check[i] >= 2)) vhot.push_back(i);
@@ -732,18 +840,18 @@ bool cmp(const pair<pairKey, int>& a, const pair<pairKey, int>& b)
 
 void pksort(pairKey& pk, int index)
 {
-	for(int i = 0; i<index -1; i++)
-		for(int k = i+1; k<index;k++)
+	for (int i = 0; i < index - 1; i++)
+		for (int k = i + 1; k < index;k++)
 			if (pk.index[i] > pk.index[k])
 			{
 				int tmp = pk.index[i];
 				pk.index[i] = pk.index[k];
 				pk.index[k] = tmp;
 			}
-	
+
 }
 
-void showPair(const char* fileName, map<pairKey, int>& m, map<pairKey, int>& latest)
+void showPair(const char* fileName, map<pairKey, int>& m, map<pairKey, int>& latest, bool bonus)
 {
 	ofstream fout;
 	fout.open(fileName);
@@ -766,9 +874,38 @@ void showPair(const char* fileName, map<pairKey, int>& m, map<pairKey, int>& lat
 
 		sprintf(buf, "] %d %d", chk.second, latest[chk.first]);
 		fout << buf;
-		if (latest[chk.first] == END_NUMBER) fout << " [+]" << endl;
+		if (latest[chk.first] == END_NUMBER)
+		{
+			fout << " [+] ";
+
+			for (int day = END_NUMBER - 1; day >= START_NUMBER; day--)
+			{
+				LOTTO& lotto = LottoWinningNumber[day];
+				int check[50] = { 0 };
+				int cnt = 0;
+				for (int k = 0; k < 4;k++)
+				{
+					check[chk.first.index[k]] = 1;
+					cnt++;
+					if (chk.first.index[k + 1] == 0) break;
+
+				}
+
+				int comp = 0;
+				for (int k = 0; k < 6 + bonus;k++)
+					if (check[lotto.number[k]]) comp++;
+
+				if (cnt == comp)
+				{
+					fout << "( <= " << day << " )";
+					break;
+				}
+			}
+
+			fout << endl;
+		}
 		else fout << endl;
-		
+
 		//printf("%d %d %d] %d %d\n", chk.first.index[0], chk.first.index[1], chk.first.index[2], chk.second, latestPair5[chk.first]);
 	}
 
@@ -784,6 +921,8 @@ int sttPastRanks[6][2000];
 
 int arrLotto[2000][46];
 int arrLottob[2000][46];
+int colorCount[7] = { 0 };
+int colorCountb[7] = { 0 };
 
 int countJumpNumber(LOTTO& lotto, int jump)
 {
@@ -799,17 +938,72 @@ void showAllStatistics()
 	ofstream fout;
 	fout.open("ShowAllStatistics.txt");
 	endLotto = LottoWinningNumber[END_NUMBER];
+
+	fout << REAL_END_NUMBER;
+	fout << "회 통계 per 100\n";
+	fout << "      ";
+	for (int i = 1; i <= 45;i++)
+	{
+		if (i == (REAL_END_NUMBER % 100)) fout << "★ ";
+		else fout << (i % 10) << " ";
+	}
+	fout << endl;
+
+
+	int count[50] = { 0 };
+	for (int i = 1; i <= END_NUMBER;i++)
+	{
+		LOTTO& lotto = LottoWinningNumber[i];
+		if ((i % 100) != (REAL_END_NUMBER % 100)) continue;
+	
+
+		int tmpcount[50] = { 0 };
+		for (int k = 0; k < 6;k++)
+		{
+			count[lotto.number[k]]++;
+			tmpcount[lotto.number[k]] = 1;
+		}
+
+		char buf[5];
+		sprintf(buf, "%3d ", i);
+		fout << buf;
+		
+		fout << "  ";
+		for (int k = 1; k <= 45;k++)
+		{
+			if (k == lotto.bonus) fout << "○";
+			else if (tmpcount[k]) fout << "■";
+			else fout << "□";
+		}
+		fout << endl;
+	}
+
+	fout << "      ";
+	for (int i = 1; i <= 45;i++)
+	{
+		char buf[5];
+		sprintf(buf, "%2d", count[i]);
+		fout << buf;
+	}
+	fout << endl;
+	fout << endl;
+
+
 	for (int i = START_NUMBER; i <= END_NUMBER; i++)
 	{
 		LOTTO& lotto = LottoWinningNumber[i];
+		
+		colorCount[lotto.countOfColor]++;
+		colorCountb[lotto.countOfColorBonus]++;
+
 		for (int k = 0; k < 6;k++)
-		{	
+		{
 			pairKey pk = { 0 };
 			pk.index[0] = lotto.number[k];
 			oneNum[pk]++;
 			latestOneNum[pk] = i;
 		}
-		
+
 		for (int k = 0; k < 7;k++)
 		{
 			pairKey pk = { 0 };
@@ -817,7 +1011,7 @@ void showAllStatistics()
 			withBonus[pk]++;
 			latestWithBonus[pk] = i;
 		}
-			
+
 		{
 			pairKey pk = { 0 };
 			pk.index[0] = lotto.bonus;
@@ -958,17 +1152,17 @@ void showAllStatistics()
 		//	}
 		//}
 	}
-	
+
 	printf("================ show Pair ==============\n");
-	showPair("Pair1.txt", oneNum, latestOneNum);
-	showPair("Pair1_bonus.txt", withBonus, latestWithBonus);
-	showPair("Pair1_onlybonus.txt", onlyBonus, latestOnlyBonus);
-	showPair("Pair2.txt", pair2, latestPair2);
-	showPair("Pair2_bonus.txt", pair2b, latestPair2b);
-	showPair("Pair3.txt", pair3, latestPair3);
-	showPair("Pair3_bonus.txt", pair3b, latestPair3b);
-	showPair("Pair4.txt", pair4, latestPair4);
-	showPair("Pair4_bonus.txt", pair4b, latestPair4b);
+	showPair("Pair1.txt", oneNum, latestOneNum, false);
+	showPair("Pair1_bonus.txt", withBonus, latestWithBonus, true);
+	showPair("Pair1_onlybonus.txt", onlyBonus, latestOnlyBonus, true);
+	showPair("Pair2.txt", pair2, latestPair2, false);
+	showPair("Pair2_bonus.txt", pair2b, latestPair2b, true);
+	showPair("Pair3.txt", pair3, latestPair3, false);
+	showPair("Pair3_bonus.txt", pair3b, latestPair3b, true);
+	showPair("Pair4.txt", pair4, latestPair4, false);
+	showPair("Pair4_bonus.txt", pair4b, latestPair4b, true);
 
 	int sttAC[11] = { 0 };
 	for (int i = START_NUMBER; i <= END_NUMBER; i++)
@@ -995,6 +1189,7 @@ void showAllStatistics()
 	{
 		sprintf(buff, "%d] %d", i, sttPrime[i]);
 		fout << buff;
+
 		if (i == endLotto.numOfPrimeNum) fout << " [+]";
 		fout << endl;
 	}
@@ -1026,6 +1221,26 @@ void showAllStatistics()
 		fout << endl;
 	}
 
+	fout << "\nColor Count\n";
+	for (int i = 1; i <= 5;i++)
+	{
+		sprintf(buff, "%d ] %d", i, colorCount[i]);
+		fout << buff;
+		if (i == endLotto.countOfColor) fout << " [+]";
+		fout << endl;
+	}
+
+	fout << "\nColor Count with Bonus\n";
+	for (int i = 1; i <= 5;i++)
+	{
+		sprintf(buff, "%d ] %d", i, colorCountb[i]);
+		fout << buff;
+		if (i == endLotto.countOfColorBonus) fout << " [+]";
+		fout << endl;
+	}
+
+
+
 	int chk;
 	chk = 0; for (int i = 0; i < 7;i++) chk += sttPrime[i];
 	if (chk != total) printf("chk Number is not Prime Number %d != %d\n", chk, total);
@@ -1045,7 +1260,7 @@ void showAllStatistics()
 		sprintf(buff, "%3d ", k);
 		fout << buff;
 	}
-	fout << "total"<< endl;
+	fout << "total" << endl;
 	for (int k = 1; k <= 12;k++)
 	{
 		sprintf(buff, "%3d ", monthCount[k]);
@@ -1064,7 +1279,7 @@ void showAllStatistics()
 	}
 	sprintf(buff, "%3d ", bsum);
 	fout << buff;
-	fout << "bonus"<< endl;
+	fout << "bonus" << endl;
 
 	for (int k = 1; k <= 12;k++)
 	{
@@ -1203,7 +1418,7 @@ void showAllStatistics()
 	sprintf(buff, ">> %d %d %d %d %d\n", endLotto.countOfPastRanks[1], endLotto.countOfPastRanks[2], endLotto.countOfPastRanks[3], endLotto.countOfPastRanks[4], endLotto.countOfPastRanks[5]);
 	fout << buff;
 	fout << "  ";
-	for (int k = 1; k <= 40;k++)
+	for (int k = 0; k <= 40;k++)
 	{
 		sprintf(buff, "%3d ", k);
 		fout << buff;
@@ -1213,9 +1428,9 @@ void showAllStatistics()
 	{
 		sprintf(buff, "%d ", i);
 		fout << buff;
-		for (int k = 1; k <= 40;k++)
+		for (int k = 0; k <= 40;k++)
 		{
-			if(sttPastRanks[i][k]) sprintf(buff, "%3d ", sttPastRanks[i][k]);
+			if (sttPastRanks[i][k]) sprintf(buff, "%3d ", sttPastRanks[i][k]);
 			else sprintf(buff, "    ", sttPastRanks[i][k]);
 			fout << buff;
 		}
@@ -1227,7 +1442,7 @@ void showAllStatistics()
 	for (int i = START_NUMBER; i <= END_NUMBER; i++)
 	{
 		LOTTO& lotto = LottoWinningNumber[i];
-		
+
 		for (int k = 0; k < 6; k++) arrLotto[i][lotto.number[k]] = 1;
 		for (int k = 0; k < 7; k++) arrLottob[i][lotto.number[k]] = 1;
 
@@ -1245,11 +1460,11 @@ void showAllStatistics()
 		}
 
 		LOTTO& lotto = LottoWinningNumber[i];
-		hotColdOneCount[lotto.numOfHot][lotto.numOfCold][lotto.numOfOne]++;			
+		hotColdOneCount[lotto.numOfHot][lotto.numOfCold][lotto.numOfOne]++;
 	}
 
 	fout << "\n *** Hot / Cold / One ***\n";
-	
+
 	for (int k1 = 0; k1 <= 6;k1++)
 		for (int k2 = 0; k2 <= 6;k2++)
 			for (int k3 = 0; k3 <= 6;k3++)
@@ -1259,7 +1474,7 @@ void showAllStatistics()
 					printf("hot cold one count %d %d %d is error, it is not 6 != %d\n", k1, k2, k3, hotColdOneCount[k1][k2][k3]);
 					exit(1);
 				}
-				
+
 				if ((k1 + k2 + k3) == 6 && hotColdOneCount[k1][k2][k3])
 				{
 					sprintf(buff, "%d %d %d] %d", k1, k2, k3, hotColdOneCount[k1][k2][k3]);
@@ -1270,7 +1485,7 @@ void showAllStatistics()
 				}
 			}
 	fout << endl;
-	
+
 	int consecutiveNumber[10] = { 0 };
 	for (int i = START_NUMBER; i <= END_NUMBER; i++)
 	{
@@ -1335,8 +1550,8 @@ void showAllStatistics()
 		for (int k = 2; k <= 40;k++)
 		{
 			int cnt = countJumpNumber(lotto, k);
-			
-			if(cnt) jumpNumber[k]++;
+
+			if (cnt) jumpNumber[k]++;
 			jumpNumberTotal[k] += cnt;
 			if (k == 2 && cnt) flag = 1;
 		}
@@ -1531,7 +1746,7 @@ void showAllStatistics()
 		LOTTO& lotto = LottoWinningNumber[i];
 		LOTTO& next = LottoWinningNumber[i + 1];
 		bonus[lotto.bonus]++;
-		if (arrLotto[i+1][lotto.bonus])
+		if (arrLotto[i + 1][lotto.bonus])
 		{
 			bonusNextReal++;
 			bonusNextRealCount[lotto.bonus]++;
@@ -1575,7 +1790,7 @@ void showAllStatistics()
 
 	//보너스 번호가 다음 보너스에 나오는 경우
 	fout << "\n *** Case : Bonus -> Bonus ***\n";
-	
+
 	int bonusNextBonus = 0;
 	int bonusNextBonusCount[46] = { 0 };
 	for (int i = START_NUMBER; i <= END_NUMBER - 1; i++)
@@ -1594,7 +1809,7 @@ void showAllStatistics()
 
 	sprintf(buff, "\nBonus Next Bonus : %d / %d\n", bonusNextBonus, total);
 	fout << buff;
-	
+
 	for (int i = 1; i <= 45;i++)
 	{
 		sprintf(buff, "%2d ", i);
@@ -1613,6 +1828,464 @@ void showAllStatistics()
 	//1이 나온다음에 나올 숫자들은?
 }
 
+
+void showConsAndJump()
+{
+	ofstream fout;
+	fout.open("ShowConsAndJump.txt");
+	char buff[100];
+	for (int i = START_NUMBER;i <= END_NUMBER;i++)
+	{
+		int chk[50] = { 0 };
+
+		LOTTO& lotto = LottoWinningNumber[i];
+		for (int k = 0; k < 5;k++)
+		{
+			if (lotto.number[k + 1] - lotto.number[k] == 1)
+				chk[lotto.number[k]] = chk[lotto.number[k + 1]] = 1;
+		}
+
+		sprintf(buff, "%4d] ", i);
+		fout << buff;
+
+		int flag = 0;
+		for (int k = 1; k <= 45;k++)
+			if (chk[k]) flag = 1;
+
+		if (flag)
+		{
+			for (int k = 1; k <= 45;k++)
+			{
+				if (chk[k]) fout << "■";
+				else fout << "□";
+			}
+
+			if (checkConsecutive2_2(lotto)) fout << "    ★";
+		}
+		else
+		{
+			for (int k = 1; k <= 45;k++) fout << "＃";
+		}
+		
+		fout << endl;
+	}
+	fout << endl;
+
+	int flag = 0;
+	for (int i = END_NUMBER; i >= START_NUMBER;i--)
+	{
+		int check[50] = { 0 };
+		for (int k = i; k <= END_NUMBER;k++)
+		{
+			LOTTO& lotto = LottoWinningNumber[k];
+			for (int t = 0; t < 5;t++)
+			{
+				if (lotto.number[t + 1] - lotto.number[t] == 1)
+					check[lotto.number[t]] = check[lotto.number[t + 1]] = 1;
+			}
+		}
+
+		
+
+		int cnt = 0;
+		for (int k = 1; k <= 45;k++)
+			if (check[k]) cnt++;
+		
+		if (flag == 1 && cnt == 45) break;
+		if (cnt == 45) flag = 1;
+
+		fout << "      ";
+		for (int k = 1; k <= 45;k++)
+		{
+			if (check[k]) fout << "■";
+			else fout << "□";
+		}
+
+		fout << "    << " << i << endl;
+	}
+	
+	fout << endl;
+	fout << endl;
+
+
+
+
+	for (int i = START_NUMBER;i <= END_NUMBER;i++)
+	{
+		int chk[50] = { 0 };
+
+		LOTTO& lotto = LottoWinningNumber[i];
+		for (int k = 0; k < 5;k++)
+		{
+			if (lotto.number[k + 1] - lotto.number[k] == 2)
+				chk[lotto.number[k]] = chk[lotto.number[k + 1]] = 1;
+		}
+
+		sprintf(buff, "%4d] ", i);
+		fout << buff;
+
+		int flag = 0;
+		for (int k = 1; k <= 45;k++)
+			if (chk[k]) flag = 1;
+
+		if (flag)
+		{
+			for (int k = 1; k <= 45;k++)
+			{
+				if (chk[k]) fout << "■";
+				else fout << "□";
+			}
+		}
+		else
+		{
+			for (int k = 1; k <= 45;k++) fout << "＃";
+		}
+
+		fout << endl;
+	}
+	fout << endl;
+
+	flag = 0;
+	for (int i = END_NUMBER; i >= START_NUMBER;i--)
+	{
+		int check[50] = { 0 };
+		for (int k = i; k <= END_NUMBER;k++)
+		{
+			LOTTO& lotto = LottoWinningNumber[k];
+			for (int t = 0; t < 5;t++)
+			{
+				if (lotto.number[t + 1] - lotto.number[t] == 2)
+					check[lotto.number[t]] = check[lotto.number[t + 1]] = 1;
+			}
+		}
+
+
+
+		int cnt = 0;
+		for (int k = 1; k <= 45;k++)
+			if (check[k]) cnt++;
+
+		if (flag == 1 && cnt == 45) break;
+		if (cnt == 45) flag = 1;
+
+		fout << "      ";
+		for (int k = 1; k <= 45;k++)
+		{
+			if (check[k]) fout << "■";
+			else fout << "□";
+		}
+
+		fout << "    << " << i << endl;
+	}
+
+	fout << endl;
+	fout << endl;
+
+	for (int i = START_NUMBER;i <= END_NUMBER;i++)
+	{
+		int chk[50] = { 0 };
+
+		LOTTO& lotto = LottoWinningNumber[i];
+		int jumpFlag, consFlag;
+
+		jumpFlag = consFlag = 0;
+		for (int k = 0; k < 5;k++)
+		{
+			if ((lotto.number[k + 1] - lotto.number[k] == 1))
+			{
+				chk[lotto.number[k]] = chk[lotto.number[k + 1]] = 1;
+				consFlag = 1;
+			}
+
+			if ((lotto.number[k + 1] - lotto.number[k] == 2))
+			{
+				chk[lotto.number[k]] = chk[lotto.number[k + 1]] = 1;
+				jumpFlag = 1;
+			}
+
+		}
+
+		sprintf(buff, "%4d] ", i);
+		fout << buff;
+
+		int flag = 0;
+		for (int k = 1; k <= 45;k++)
+			if (chk[k]) flag = 1;
+
+		if (flag)
+		{
+			for (int k = 1; k <= 45;k++)
+			{
+				if (chk[k]) fout << "■";
+				else fout << "□";
+			}
+			if (consFlag & jumpFlag) fout << "   ◀";
+			if (checkConsecutive2_2(lotto)) fout << "  ★";
+		}
+		else
+		{
+			for (int k = 1; k <= 45;k++) fout << "＃";
+		}
+
+		fout << endl;
+	}
+	fout << endl;
+
+	flag = 0;
+	for (int i = END_NUMBER; i >= START_NUMBER;i--)
+	{
+		int check[50] = { 0 };
+		for (int k = i; k <= END_NUMBER;k++)
+		{
+			LOTTO& lotto = LottoWinningNumber[k];
+			for (int t = 0; t < 5;t++)
+			{
+				if ((lotto.number[t + 1] - lotto.number[t] == 1) || (lotto.number[t + 1] - lotto.number[t] == 2))
+					check[lotto.number[t]] = check[lotto.number[t + 1]] = 1;
+			}
+		}
+
+
+
+		int cnt = 0;
+		for (int k = 1; k <= 45;k++)
+			if (check[k]) cnt++;
+
+		if (flag == 1 && cnt == 45) break;
+		if (cnt == 45) flag = 1;
+
+		fout << "      ";
+		for (int k = 1; k <= 45;k++)
+		{
+			if (check[k]) fout << "■";
+			else fout << "□";
+		}
+
+		fout << "    << " << i << endl;
+	}
+
+	fout << endl;
+	fout << endl;
+
+	fout.close();
+}
+
+void latestAnalysis(bool bonus)
+{
+	ofstream fout;
+	if (bonus) fout.open("ShowAnalysisBonus.txt");
+	else fout.open("ShowAnalysis.txt");
+
+	int numCount = 6 + bonus;
+	char buff[300];
+	int jumpMax = 0;
+	int latestJump[1000][50] = { 0 };
+	int arrLotto[2000][50] = { 0 };
+
+	for (int i = START_NUMBER; i <= END_NUMBER; i++)
+	{
+		LOTTO& lotto = LottoWinningNumber[i];
+		for (int k = 0; k < numCount;k++) arrLotto[i][lotto.number[k]] = 1;
+	}
+
+	for (int k = 1; k <= 45;k++)
+	{
+		int start, jump;
+		start = jump = 0;
+		for (int i = START_NUMBER; i <= END_NUMBER - 1; i++)
+		{
+			if (arrLotto[i][k])
+			{
+				start = i;
+				jump = 1;
+				break;
+			}
+		}
+
+		for (int i = start + 1; i <= END_NUMBER - 1;i++)
+		{
+			if (arrLotto[i][k])
+			{
+				latestJump[jump][k]++;
+				if (jump > jumpMax) jumpMax = jump;
+				jump = 1;
+				continue;
+			}
+
+			jump++;
+		}
+	}
+
+	fout << "    ";
+	for (int i = 1; i <= 45;i++)
+	{
+		sprintf(buff, "%3d ", i);
+		fout << buff;
+	}
+	fout << endl;
+
+
+	int max[50] = { 0 };
+	for (int i = 1; i <= 45;i++)
+		for (int k = 1; k <= jumpMax;k++)
+			if (max[i] < latestJump[k][i]) max[i] = latestJump[k][i];
+
+
+	for (int k = 1; k <= jumpMax;k++)
+	{
+		sprintf(buff, "%2d] ", k);
+		fout << buff;
+
+		for (int i = 1; i <= 45;i++)
+		{
+			if (latestJump[k][i] == max[i]) sprintf(buff, "<%2d>", latestJump[k][i]);
+			else sprintf(buff, "%3d ", latestJump[k][i]);
+			fout << buff;
+		}
+
+		fout << endl;
+	}
+
+	fout << endl;
+
+	for (int i = START_NUMBER; i <= END_NUMBER;i++)
+	{
+		int cnt = 0;
+		LOTTO& lotto = LottoWinningNumber[i];
+		sprintf(buff, "%3d] ", i);
+		fout << buff;
+		lotto.mtime = getTime(i);
+
+		for (int k = 1; k <= 45;k++)
+		{
+			if (lotto.number[cnt] == k)
+			{
+				fout << "[";
+				fout << lotto.number[cnt];
+				fout << "]";
+				cnt++;
+			}
+			else if (lotto.bonus == k)
+			{
+				fout << "<";
+				fout << lotto.bonus;
+				fout << ">";
+			}
+			else
+			{
+				fout << " ";
+				fout << k;
+				fout << " ";
+			}
+		}
+
+		fout << endl;
+	}
+
+	fout << endl;
+
+	if (END_NUMBER + 1 <= NumOfWinLotto)
+	{
+		int i = END_NUMBER + 1;
+		int cnt = 0;
+		LOTTO& lotto = LottoWinningNumber[i];
+		sprintf(buff, "%3d] ", i);
+		fout << buff;
+		lotto.mtime = getTime(i);
+
+		for (int k = 1; k <= 45;k++)
+		{
+			if (lotto.number[cnt] == k)
+			{
+				fout << "[";
+				fout << lotto.number[cnt];
+				fout << "]";
+				cnt++;
+			}
+			else if (lotto.bonus == k)
+			{
+				fout << "<";
+				fout << lotto.bonus;
+				fout << ">";
+			}
+			else
+			{
+				fout << " ";
+				fout << k;
+				fout << " ";
+			}
+		}
+
+		fout << "<< Real Number" << endl;
+	}
+
+	fout << endl;
+
+	sprintf(buff, "%3d] ", END_NUMBER + 1);
+	fout << buff;
+
+	for (int i = 1; i <= 45;i++)
+	{
+		int gap = 0;
+		int flag = 0;
+		for (int k = END_NUMBER; k >= START_NUMBER;k--)
+		{
+			gap++;
+			if (latestJump[i][k] == 0 || arrLotto[k][i] == 0) continue;
+
+			LOTTO& lotto = LottoWinningNumber[k];
+			if (latestJump[gap][i])
+			{
+				sprintf(buff, "[%d]", i);
+				fout << buff;
+				flag = 1;
+				break;
+			}
+		}
+
+		if (flag == 0)
+		{
+			sprintf(buff, " %d ", i);
+			fout << buff;
+			flag = 1;
+		}
+	}
+
+	fout << "<< Expect Number" << endl;
+
+	sprintf(buff, "%3d] ", END_NUMBER + 1);
+	fout << buff;
+	for (int i = 1; i <= 45;i++)
+	{
+		int gap = 0;
+		int flag = 0;
+		for (int k = END_NUMBER; k >= START_NUMBER;k--)
+		{
+			gap++;
+			if (latestJump[i][k] == 0 || arrLotto[k][i] == 0) continue;
+
+			LOTTO& lotto = LottoWinningNumber[k];
+			if (latestJump[gap][i] && max[i] == latestJump[gap][i])
+			{
+				sprintf(buff, "[%d]", i);
+				fout << buff;
+				flag = 1;
+				break;
+			}
+		}
+
+		if (flag == 0)
+		{
+			sprintf(buff, " %d ", i);
+			fout << buff;
+			flag = 1;
+		}
+	}
+
+	fout << "<< Expect Number with Max Point" << endl;
+
+}
+
 void statistics()
 {
 	showWinningNumbers();
@@ -1625,11 +2298,16 @@ void statistics()
 	findAllJumpNumbers();
 	showJumpNumbers();
 
+	showConsAndJump();
 	for (int i = LIMIT + 1; i <= NumOfWinLotto + 1;i++) findHotColdOne(i);
 
 	showStatisticsWinningNumber();
 	showAllStatistics();
 }
+
+
+
+
 
 
 //보너스 포함

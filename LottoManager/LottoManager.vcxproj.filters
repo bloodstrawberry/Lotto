@@ -13,6 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="리소스 파일\react">
+      <UniqueIdentifier>{b1e48696-dc30-41a9-9b93-e8a58fbf33ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\hotcoldone">
+      <UniqueIdentifier>{6304c6a0-59e4-40df-a7a7-c22e96ea3c76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\pension">
+      <UniqueIdentifier>{4d357dd5-7ae4-45bb-a7df-a94c36361979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\result">
+      <UniqueIdentifier>{76afcc6c-acd8-4981-be3e-2feef814f10a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\result\pair">
+      <UniqueIdentifier>{86ed4de4-bb22-43ea-a6b3-c1d79c0f2712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\result\jumpcons">
+      <UniqueIdentifier>{c61a8b7b-ed55-431b-934e-618b67735987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\input">
+      <UniqueIdentifier>{30644a82-9679-4fbc-b493-1323172e4b2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,6 +48,12 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="PensionManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt">
@@ -35,22 +62,10 @@
     <Text Include="output.txt">
       <Filter>리소스 파일</Filter>
     </Text>
-    <Text Include="LottoWinningNumber.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
-    <Text Include="MySuckNumber.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
     <Text Include="Memo.txt">
       <Filter>리소스 파일</Filter>
     </Text>
     <Text Include="monthly.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
-    <Text Include="HotNumber.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
-    <Text Include="ColdNumber.txt">
       <Filter>리소스 파일</Filter>
     </Text>
     <Text Include="ShowWinningNumber.txt">
@@ -62,47 +77,77 @@
     <Text Include="PickNumbers.txt">
       <Filter>리소스 파일</Filter>
     </Text>
-    <Text Include="OneNumber.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
-    <Text Include="ShowConsecutiveNumber.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
-    <Text Include="ShowJumpNumber.txt">
-      <Filter>리소스 파일</Filter>
-    </Text>
     <Text Include="ShowAllStatistics.txt">
       <Filter>리소스 파일</Filter>
     </Text>
-    <Text Include="Pair2.txt">
+    <Text Include="A.txt">
       <Filter>리소스 파일</Filter>
     </Text>
-    <Text Include="Pair3.txt">
-      <Filter>리소스 파일</Filter>
+    <Text Include="ColdNumber.txt">
+      <Filter>리소스 파일\hotcoldone</Filter>
     </Text>
-    <Text Include="Pair4.txt">
-      <Filter>리소스 파일</Filter>
+    <Text Include="HotNumber.txt">
+      <Filter>리소스 파일\hotcoldone</Filter>
     </Text>
-    <Text Include="Pair2_bonus.txt">
-      <Filter>리소스 파일</Filter>
+    <Text Include="OneNumber.txt">
+      <Filter>리소스 파일\hotcoldone</Filter>
     </Text>
-    <Text Include="Pair3_bonus.txt">
-      <Filter>리소스 파일</Filter>
+    <Text Include="PensionSort.txt">
+      <Filter>리소스 파일\pension</Filter>
+    </Text>
+    <Text Include="PensionWinningNumber.txt">
+      <Filter>리소스 파일\pension</Filter>
     </Text>
     <Text Include="Pair4_bonus.txt">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\result\pair</Filter>
     </Text>
     <Text Include="Pair1.txt">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\result\pair</Filter>
     </Text>
     <Text Include="Pair1_bonus.txt">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\result\pair</Filter>
     </Text>
     <Text Include="Pair1_onlybonus.txt">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\result\pair</Filter>
     </Text>
-    <Text Include="ShowLatest.txt">
-      <Filter>리소스 파일</Filter>
+    <Text Include="Pair2.txt">
+      <Filter>리소스 파일\result\pair</Filter>
+    </Text>
+    <Text Include="Pair2_bonus.txt">
+      <Filter>리소스 파일\result\pair</Filter>
+    </Text>
+    <Text Include="Pair3.txt">
+      <Filter>리소스 파일\result\pair</Filter>
+    </Text>
+    <Text Include="Pair3_bonus.txt">
+      <Filter>리소스 파일\result\pair</Filter>
+    </Text>
+    <Text Include="Pair4.txt">
+      <Filter>리소스 파일\result\pair</Filter>
+    </Text>
+    <Text Include="ShowJumpNumber.txt">
+      <Filter>리소스 파일\result\jumpcons</Filter>
+    </Text>
+    <Text Include="ShowConsecutiveNumber.txt">
+      <Filter>리소스 파일\result\jumpcons</Filter>
+    </Text>
+    <Text Include="ShowConsAndJump.txt">
+      <Filter>리소스 파일\result\jumpcons</Filter>
+    </Text>
+    <Text Include="LottoWinningNumber.txt">
+      <Filter>리소스 파일\input</Filter>
+    </Text>
+    <Text Include="MySuckNumber.txt">
+      <Filter>리소스 파일\input</Filter>
+    </Text>
+    <Text Include="MySuckPensionNumber.txt">
+      <Filter>리소스 파일\pension</Filter>
+    </Text>
+    <Text Include="ShowAnalysis.txt">
+      <Filter>리소스 파일\result</Filter>
+    </Text>
+    <Text Include="ShowAnalysisBonus.txt">
+      <Filter>리소스 파일\result</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -118,5 +163,16 @@
     <ClInclude Include="FileManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="PensionManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LottoWinningNumber.json">
+      <Filter>리소스 파일\react</Filter>
+    </None>
   </ItemGroup>
 </Project>
