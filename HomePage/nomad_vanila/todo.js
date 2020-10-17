@@ -11,8 +11,6 @@ function filterFn(toDo){
 }
 
 function deleteToDo(event) {
-    //console.dir(event.target);
-    //console.log(event.target.parentNode);
     const btn = event.target;
     const li = btn.parentNode;
     toDoList.removeChild(li);
@@ -33,14 +31,17 @@ function paintToDo(text){
 
     const li = document.createElement("li");
     const delBtn = document.createElement("button");
+
     delBtn.innerText = "X";
     delBtn.addEventListener("click",deleteToDo);
+
     const span = document.createElement("span");
     span.innerText = text;
     const newId = toDos.length + 1;
 
     li.appendChild(span);
     li.appendChild(delBtn);
+
     li.id = newId;
     toDoList.appendChild(li);
 
