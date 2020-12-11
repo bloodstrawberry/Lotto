@@ -1,0 +1,85 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 100%;
+  height: 100vh;
+}
+
+
+
+
+
+.wrap {
+  background-color: tan;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(2, 50vh);
+  grid-template-areas:
+    "g1 g2"
+    "g3 g4"
+}
+
+.wrap div {
+  font-size: 100px;
+  text-align: center;
+  line-height: 50vh;
+}
+
+.g1 {
+  background-color: #2ecc71;
+  grid-area: g1;
+ 
+}
+
+.g2 {
+  background-color: #3498db;
+  grid-area: g2;
+}
+
+.g3 {
+  background-color: #904ee6;
+  grid-area: g3;
+}
+
+.g4 {
+  background-color: #3fec2f;
+  grid-area: g4;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(2, 50%);
+  grid-template-areas:
+    "child1 child2"
+    "child3 child4"
+}
+
+.g4 div {
+  font-size: 50px;
+  text-align: center;
+  line-height: 25vh;
+}
+
+.child1 {
+  background-color: #ec76cf;
+  grid-area: child1;
+}
+
+.child2 {
+  background-color: #434ee9;
+  grid-area: child2;
+}
+
+.child3 {
+  background-color: #c1df1b;
+  grid-area: child3;
+}
+
+.child4 {
+  background-color: #57e034;
+  grid-area: child4;
+}
