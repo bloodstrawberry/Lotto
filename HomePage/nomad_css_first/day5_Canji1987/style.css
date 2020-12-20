@@ -1,0 +1,62 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 100%;
+  height: 100vh;
+  text-transform: uppercase;
+}
+
+.wrapper{
+  height: 100%;
+  display: grid;
+  grid-template: 
+  "grid1 grid2 grid6 grid7" 1fr
+  "grid3 grid4 grid6 grid7" 1fr
+  "grid3 grid5 grid6 grid7" 1fr / 1fr 1fr 1fr 1fr;
+  
+}
+
+.flip {
+  display: inline-block;
+  vertical-align: top;
+  transform: rotate(180deg); 
+  -ms-filter: fliph;
+  filter: fliph;
+}
+
+.grid1{
+  grid-area: grid1;
+  background-color: black;
+  color: white;
+}
+
+.grid6 li, .grid7 li{
+  margin-bottom: 5px;
+}
+
+.grid6 li:first-child, .grid7 li:first-child{
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+.grid2{
+  grid-area: grid2;
+  background-color: purple;
+}
+.grid3{
+  grid-area: grid3;
+  background-color: red;
+}
+.grid4{
+  grid-area: grid4;
+}
+.grid5{
+  grid-area: grid5;
+  background-color: peru;
+}
+.grid6{
+  grid-area: grid6;
+}
+.grid7{
+  grid-area: grid7;
+}

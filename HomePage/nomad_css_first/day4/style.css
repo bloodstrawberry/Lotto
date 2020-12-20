@@ -4,82 +4,47 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   width: 100%;
   height: 100vh;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(255px, 1fr));
+  grid-template-rows: 8vw;
+  grid-auto-rows: 46vh;
 }
 
 
-
-
-
-.wrap {
-  background-color: tan;
-  width: 100%;
-  height: 100vh;
-  display: grid;
-
-  grid-template-columns: repeat(2, 50%);
-  grid-template-rows: repeat(2, 50vh);
-  grid-template-areas:
-    "g1 g2"
-    "g3 g4"
+header {
+  grid-column: 1 / -1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:5vw;
 }
 
-.wrap div {
-  font-size: 100px;
-  text-align: center;
-  line-height: 50vh;
+
+article {
+  background-color:#FE4714;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 30px 10px 30px;
+  text-align:center;
 }
 
-.g1 {
-  background-color: #2ecc71;
-  grid-area: g1;
- 
+article:nth-child(2n){
+background-color:#41907A;
 }
 
-.g2 {
-  background-color: #3498db;
-  grid-area: g2;
+article h3 {
+  font-size:22px;
 }
 
-.g3 {
-  background-color: #904ee6;
-  grid-area: g3;
+.cover {
+  background-image:url("https://images.unsplash.com/photo-1465021696408-57e53e164d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+  background-size:cover;
+  background-position:center;
 }
 
-.g4 {
-  background-color: #3fec2f;
-  grid-area: g4;
-
-  display: grid;
-
-  grid-template-columns: repeat(2, 50%);
-  grid-template-rows: repeat(2, 50%);
-  grid-template-areas:
-    "child1 child2"
-    "child3 child4"
-}
-
-.g4 div {
-  font-size: 50px;
-  text-align: center;
-  line-height: 25vh;
-}
-
-.child1 {
-  background-color: #ec76cf;
-  grid-area: child1;
-}
-
-.child2 {
-  background-color: #434ee9;
-  grid-area: child2;
-}
-
-.child3 {
-  background-color: #c1df1b;
-  grid-area: child3;
-}
-
-.child4 {
-  background-color: #57e034;
-  grid-area: child4;
+.cover:nth-child(odd){
+  background-image:url("https://images.unsplash.com/photo-1478071735433-5d8f19ad0fca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
 }
